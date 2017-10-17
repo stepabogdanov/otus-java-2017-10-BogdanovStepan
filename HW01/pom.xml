@@ -12,6 +12,7 @@
 
     <groupId>Otus</groupId>
     <artifactId>HW01</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
