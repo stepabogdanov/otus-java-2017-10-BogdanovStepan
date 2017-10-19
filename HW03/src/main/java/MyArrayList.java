@@ -60,7 +60,7 @@ public class MyArrayList<T> implements List<T> {
         return true; // TODO: 19.10.17 check false
     }
 
-    public boolean enlargeArrayToTen () {       // TODO: 19.10.17 must be private
+    public boolean enlargeArrayToTen () {       // TODO: 19.10.17 must be private, more elements
 //        Object[] objectBuff = new Object[objectsT.length + 10];
         objects = new Object[objectsT.length + 10];
         System.arraycopy(objectsT,0, objects, 0,objectsT.length);
@@ -76,9 +76,28 @@ public class MyArrayList<T> implements List<T> {
     }
 
     @Override
+    public boolean remove(Object o) {
+        o = (T) o;
+
+        for (int i=0; i<objectsT.length; i++) {            // TODO: 19.10.17 foreach statement
+            if (objectsT[i] != null && objectsT[i].equals(o)) {
+                objectsT[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        return false;
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return null;
     }
+
     @Override
     public <T1> T1[] toArray(T1[] a) {
         return null;
@@ -86,18 +105,7 @@ public class MyArrayList<T> implements List<T> {
 
 
     @Override
-    public boolean remove(Object o) {
-
-        return false;
-    }
-
-    @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends T> c) {
         return false;
     }
 

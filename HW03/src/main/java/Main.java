@@ -7,6 +7,7 @@ public class Main {
         String[] arr = new String[0];
 
         System.out.println("size: " + list.size());
+        System.out.println("isEmpty: " +list.isEmpty());
         list.add("1");
         list.add("5");
         list.add("7");
@@ -31,6 +32,9 @@ public class Main {
         System.out.println("size: " + list.size());
         System.out.println("toArray: " + Arrays.toString(list.toArray()));
         System.out.println("contains 3 ?: " + list.contains("3"));
+        System.out.println("remove 3: " +list.remove("3"));
+        list.add("12");
+        System.out.println("toArray: " + Arrays.toString(list.toArray()));
 
 
 
