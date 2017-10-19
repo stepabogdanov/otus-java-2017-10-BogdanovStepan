@@ -1,20 +1,40 @@
 import java.util.*;
 
 public class MyArrayList<T> implements List<T> {
+    private Object[] objects;
+    private T[] objectsT;
 
+    MyArrayList (){
+        objects= new Object[10];
+        objectsT = (T[]) objects;
+    }
 
     @Override
     public int size() {
-        return 0;
+
+        return objectsT.length;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        for (int i = 0; i < objectsT.length; i++) {
+            if (objectsT[i] != null) {
+                return false;
+            }
+        }
+        return true;
+
     }
 
     @Override
     public boolean contains(Object o) {
+        for (int i=0; i<objectsT.length; i++) {
+            if (o.equals(objectsT[i])) {
+                return true;
+            }
+
+        }
+
         return false;
     }
 
@@ -33,10 +53,10 @@ public class MyArrayList<T> implements List<T> {
         return null;
     }
 
-    @Override
-    public boolean add(T t) {
-        return false;
-    }
+//    @Override
+//    public boolean add(T t) {
+//        return false;
+//    }
 
     @Override
     public boolean remove(Object o) {
@@ -90,6 +110,30 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
+        objectsT[index] = element;
+
+
+    }
+
+    public boolean add(T element) {
+        for (int i = 0; i < objectsT.length; i++) {
+            if (objectsT[i] != null) {
+                objectsT[i] = element;
+            } else {
+                enlargeArrayToTen();
+                objectsT[i+1] = element;
+            }
+
+        }
+        return true;
+    }
+
+    private void enlargeArrayToTen () {
+        Object[] newObjects = new Object[objects.length + 10];
+        newObjects = objects;
+        objects = newObjects;
+        objectsT = (T[])objects;
+
 
     }
 
@@ -123,3 +167,4 @@ public class MyArrayList<T> implements List<T> {
         return null;
     }
 }
+
