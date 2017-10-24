@@ -41,7 +41,7 @@ public class MeasureObjects {
             System.out.println("size of object: " + sizeOfObject);
         }
         else {
-            sizeOfObject = (sizeOfObject%8) + sizeOfObject ;
+            sizeOfObject = ((sizeOfObject/8) * 8) + 8;
             System.out.println("size of object: " + sizeOfObject);
         }
         System.out.println();

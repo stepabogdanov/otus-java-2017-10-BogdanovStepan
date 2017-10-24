@@ -27,7 +27,7 @@ public class Main {
         //MeasureObjects.MeasureSize(integer);
         MeasureObjects.MeasureSize(myClass);
         MeasureObjects.MeasureSize(list);
-        //MeasureObjects.MeasureSize(list2);
+        MeasureObjects.MeasureSize(list2);
         MeasureObjects.MeasureSize(map);
     }
 }
