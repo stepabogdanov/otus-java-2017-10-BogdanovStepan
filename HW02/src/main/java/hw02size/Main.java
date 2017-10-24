@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException, InterruptedException, NoSuchMethodException, InvocationTargetException {
+    public static void main(String[] args) throws InstantiationException,
+                                            IllegalAccessException,
+                                            InterruptedException {
         Object object = new Object();
         String stringPoll = new String();
         String string = new String(new char[0]);
@@ -24,10 +26,10 @@ public class Main {
         MeasureObjects.MeasureSize(object);
         MeasureObjects.MeasureSize(string);
         MeasureObjects.MeasureSize(stringPoll);
-        //MeasureObjects.MeasureSize(integer);
+        //MeasureObjects.MeasureSize(integer);  // Integer бросает исключеня
         MeasureObjects.MeasureSize(myClass);
         MeasureObjects.MeasureSize(list);
-        MeasureObjects.MeasureSize(list2);
+        MeasureObjects.MeasureSize(list2);     // размер одинаковый с list
         MeasureObjects.MeasureSize(map);
     }
 }

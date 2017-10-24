@@ -6,7 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MeasureObjects {
 
-    static void MeasureSize (Object object) throws IllegalAccessException, InstantiationException, InterruptedException, NoSuchMethodException, InvocationTargetException {
+    static void MeasureSize (Object object) throws IllegalAccessException,
+            InstantiationException, InterruptedException {
         final int SIZE = 20_000_000;
         long memBefore = 0, memAfter = 0, sizeOfObject = 0;
         Runtime runtime = Runtime.getRuntime();
@@ -22,8 +23,7 @@ public class MeasureObjects {
             memBefore = runtime.totalMemory() - runtime.freeMemory();
             System.out.println("used memory before:   " + memBefore);
             for (int i = 0; i < SIZE; i++) {
-
-                arrayOfObjects[i]  = clazz.newInstance();
+                arrayOfObjects[i]  = clazz.newInstance();  // правильно ли таким образом создавать объект
                 }
             memAfter = runtime.totalMemory() - runtime.freeMemory();
             loop = false;
