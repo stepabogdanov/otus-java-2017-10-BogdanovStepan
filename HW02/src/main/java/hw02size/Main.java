@@ -1,8 +1,6 @@
 package hw02size;
 
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.TypeParameterElement;
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
