@@ -1,95 +1,41 @@
 import java.util.*;
 
 public class MyArrayList<T> implements List<T> {
-
     private Object[] objects;
     private T[] objectsT;
 
     MyArrayList (){
-
         objects= new Object[10];
         objectsT = (T[]) objects;
     }
 
     @Override
     public int size() {
+
         return objectsT.length;
     }
 
     @Override
     public boolean isEmpty() {
-        for (int i = 0; i < objectsT.length; i++) { // TODO: 19.10.17 foreach statement
+        for (int i = 0; i < objectsT.length; i++) {
             if (objectsT[i] != null) {
                 return false;
             }
         }
-    return true;
+        return true;
+
     }
 
     @Override
     public boolean contains(Object o) {
         o = (T) o;
-
-        for (int i=0; i<objectsT.length; i++) {            // TODO: 19.10.17 foreach statement
-            if (objectsT[i] != null && objectsT[i].equals(o)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void add(int index, T element) {
-        objectsT[index] = element;
-
-
-    }
-
-    public boolean add(T element) {
-        for (int i = 0; i <= objectsT.length; i++) {    // TODO: 19.10.17 foreach statement
-            if (objectsT[i] == null) {
-                objectsT[i] = element;
+        for (int i=0; i<objectsT.length; i++) {
+            if (objectsT[i].equals(o)) {
                 return true;
             }
 
-            else if (i == objectsT.length-1) {
-                enlargeArrayToTen();
-            }
-
         }
-        return true; // TODO: 19.10.17 check false
-    }
 
-    public boolean enlargeArrayToTen () {       // TODO: 19.10.17 must be private, more elements
-//        Object[] objectBuff = new Object[objectsT.length + 10];
-        objects = new Object[objectsT.length + 10];
-        System.arraycopy(objectsT,0, objects, 0,objectsT.length);
-        objectsT = (T[]) objects;
-        return true; // TODO: 19.10.17 check false
-
-
-    }
-
-    @Override
-    public Object[] toArray() {
-        return objectsT;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        o = (T) o;
-
-        for (int i=0; i<objectsT.length; i++) {            // TODO: 19.10.17 foreach statement
-            if (objectsT[i] != null && objectsT[i].equals(o)) {
-                objectsT[i] = null;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends T> c) {
         return false;
     }
 
@@ -99,13 +45,32 @@ public class MyArrayList<T> implements List<T> {
     }
 
     @Override
+    public Object[] toArray() {
+        return objectsT;
+    }
+
+    @Override
     public <T1> T1[] toArray(T1[] a) {
         return null;
     }
 
+//    @Override
+//    public boolean add(T t) {
+//        return false;
+//    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
 
     @Override
     public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
         return false;
     }
 
@@ -145,6 +110,44 @@ public class MyArrayList<T> implements List<T> {
     }
 
     @Override
+    public void add(int index, T element) {
+        objectsT[index] = element;
+
+
+    }
+
+    public boolean add(T element) {
+        for (int i = 0; i < objectsT.length; i++) {
+            if (objectsT[i] == null) {
+                objectsT[i] = element;
+                return true;
+            }
+//            else {
+//                i++;
+//                objectsT[i] = element;
+//                return true;
+//            }
+
+//
+            else {
+                enlargeArrayToTen();
+
+            }
+
+        }
+        return true;
+    }
+
+    public void enlargeArrayToTen () {
+       objects = new Object[objectsT.length+10];
+       Object[] newObjects =  new Object[objects.length];
+        objects = newObjects;
+        objectsT = (T[])objects;
+
+
+    }
+
+    @Override
     public T remove(int index) {
         return null;
     }
@@ -173,5 +176,16 @@ public class MyArrayList<T> implements List<T> {
     public List<T> subList(int fromIndex, int toIndex) {
         return null;
     }
+
+//    @Override
+//    public String toString(){
+//        StringBuffer stringBuffer = new StringBuffer();
+//        for (int i = 0; i <objectsT.length ; i++) {
+//            stringBuffer.append(", " + objectsT[i]);
+//
+//        }
+//
+//        return stringBuffer.toString();
+//    }
 }
 
