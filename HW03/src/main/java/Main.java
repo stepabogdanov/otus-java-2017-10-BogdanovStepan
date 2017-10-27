@@ -1,21 +1,13 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class Main {
-    public static void main(String[] args) {
         MyArrayList<String> list = new MyArrayList<>();
         List<String> listFull = new ArrayList();
+        List<String> listToCopy = new ArrayList(40);
         listFull.add("80");
         listFull.add("82");
-        listFull.add("83");
-        listFull.add("83");
-        listFull.add("83");
-        listFull.add("83");
-        listFull.add("83");
-        listFull.add("83");
-        listFull.add("83");
 
+
+        listToCopy.add("100");
+        listToCopy.add("101");
+        listToCopy.add("102");
 
 
         String[] arr = new String[0];
@@ -25,9 +17,7 @@ public class Main {
         list.add("1");
         list.add("5");
         list.add("7");
-        list.add("7");
-        list.add("7");
-        list.add("7");
+
 
 
 
@@ -45,6 +35,21 @@ public class Main {
         list.addAll(listFull,5);
         System.out.println("toArray: " + Arrays.toString(list.toArray()));
 
+        Collections.copy(list, listToCopy);
+        System.out.println("toArray: " + Arrays.toString(listToCopy.toArray()));
+        Collections.sort(list);
 
-    }
-}
+        System.out.println("toArray: " + Arrays.toString(list.toArray()));
+
+        ListIterator listIterator = list.listIterator();
+        listIterator.hasNext();
+        
+        
+        while (listIterator.hasNext()){
+            System.out.println(listIterator.next());
+        }
+
+
+//        System.out.println(list.get(8));
+//        list.set(8, "20");
+//        System.out.println(list.get(8));
