@@ -137,7 +137,10 @@ public class MyArrayList<T> implements List<T> {
         return true;
     }
 
+    static <T> void copy(List<? super T> dest, List<? extends T> src) {
 
+
+    }
 
 
 
@@ -175,6 +178,8 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public void sort(Comparator<? super T> c) {
 
+
+
     }
 
     @Override
@@ -184,11 +189,12 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        return objectsT[index];
     }
 
     @Override
     public T set(int index, T element) {
+        objectsT[index] = element;
         return null;
     }
 
@@ -209,7 +215,69 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        return null;
+        ListIterator <T> literator = new ListIterator<T>() {
+            int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                if (index >=0 && index < objectsT.length && objectsT[index] != null ) { return true;}
+                else return false;
+
+            }
+
+            @Override
+            public T next() {
+                int returnIndex = 0;
+                if (index-1 < objectsT.length && objectsT[index] != null) {
+                    returnIndex = index;
+                    index++;
+
+                }
+                return objectsT[returnIndex];
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                if (index >= 0) {return true; }
+                else return false;
+            }
+
+            @Override
+            public T previous() {
+                return objectsT[index-1];
+            }
+
+            @Override
+            public int nextIndex() {
+                return index+1;
+            }
+
+            @Override
+            public int previousIndex() {
+                return index-1;
+            }
+
+            @Override
+            public void remove() {
+                objectsT[index] = null;
+
+            }
+
+            @Override
+            public void set(T t) {
+                objectsT[index] = t;
+
+            }
+
+            @Override
+            public void add(T t) {
+                add(t);
+
+            }
+        };
+
+
+        return literator;
     }
 
     @Override
