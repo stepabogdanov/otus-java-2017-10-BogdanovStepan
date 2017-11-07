@@ -1,26 +1,21 @@
 import java.util.*;
 
-public class MyArrayList<T> implements List<T> {
+public class MyArrayList<T> extends AbstractList<T>  implements List<T> {
 
     private Object[] objects;
     private T[] objectsT;
-    private final int SIZE = 10;
+    private final int DEFAULT = 10;
+    int size = 0;
 
-    MyArrayList (){
+   MyArrayList (){
 
-        objects= new Object[SIZE];
+        objects= new Object[DEFAULT];
         objectsT = (T[]) objects;
     }
 
     @Override
     public int size() {
-        int j = 0;
-        for (int i = 0; i <objectsT.length ; i++) {
-            if (objectsT[i] != null) {
-                j++;
-            }
-        }
-        return j;
+      return size;
     }
 
     @Override
@@ -30,7 +25,7 @@ public class MyArrayList<T> implements List<T> {
                 return false;
             }
         }
-    return true;
+        return true;
     }
 
     @Override
@@ -48,6 +43,7 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public void add(int index, T element) {
         objectsT[index] = element;
+        size++;
 
 
     }
@@ -56,6 +52,7 @@ public class MyArrayList<T> implements List<T> {
         for (int i = 0; i <= objectsT.length; i++) {    // TODO: 19.10.17 foreach statement
             if (objectsT[i] == null) {
                 objectsT[i] = element;
+                size++;
                 return true;
             }
 
@@ -68,8 +65,7 @@ public class MyArrayList<T> implements List<T> {
     }
 
     private boolean enlargeArrayToTen () {       // TODO: 19.10.17 must be private, more elements
-//        Object[] objectBuff = new Object[objectsT.length + 10];
-        objects = new Object[objectsT.length + SIZE];
+        objects = new Object[objectsT.length + DEFAULT];
         System.arraycopy(objectsT,0, objects, 0,objectsT.length);
         objectsT = (T[]) objects;
         return true; // TODO: 19.10.17 check false
@@ -80,10 +76,11 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public Object[] toArray() {
         Object[] objects = new Object[size()];
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
           objects[i] = objectsT[i];
         }
         return objects;
+//        return Arrays.copyOf(objectsT, size);
     }
 
     @Override
@@ -110,6 +107,7 @@ public class MyArrayList<T> implements List<T> {
             }
             else if (objectsT[i] == null && iterator.hasNext()) {
                 objectsT[i] = (T) iterator.next();
+                size++;
 
                 if (i == objectsT.length - 1 && iterator.hasNext()) {
                     enlargeArrayToTen();
@@ -123,17 +121,18 @@ public class MyArrayList<T> implements List<T> {
         return true;
     }
 
-    public boolean addAll(Collection<? extends T> c, int nubElements) {
+    public boolean addAll(Collection<? extends T> c, int numbElements) {
 
         Iterator iterator = c.iterator();
         for (int i=0; i<= objectsT.length; i++) {
 
-            if (!iterator.hasNext() || nubElements == 0) {
+            if (!iterator.hasNext() || numbElements == 0) {
                 return true;
             }
             else if (objectsT[i] == null && iterator.hasNext() ) {
                 objectsT[i] = (T) iterator.next();
-                nubElements--;
+                size++;
+                numbElements--;
 
                 if (i == objectsT.length - 1 && iterator.hasNext()) {
                     enlargeArrayToTen();
@@ -156,11 +155,12 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return super.iterator();
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
+
         return null;
     }
 
@@ -183,13 +183,6 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override
-    public void sort(Comparator<? super T> c) {
-
-
-
     }
 
     @Override
@@ -225,7 +218,7 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        ListIterator <T> literator = new ListIterator<T>() {
+        ListIterator <T> listerator = new ListIterator<T>() {
             int index = 0;
 
             @Override
@@ -275,19 +268,19 @@ public class MyArrayList<T> implements List<T> {
 
             @Override
             public void set(T t) {
-                objectsT[index] = t;
+                objectsT[index-1] = t;
 
             }
 
             @Override
             public void add(T t) {
-                add(t);
+               add(t);
 
             }
         };
 
 
-        return literator;
+        return listerator;
     }
 
     @Override
@@ -300,4 +293,3 @@ public class MyArrayList<T> implements List<T> {
         return null;
     }
 }
-
