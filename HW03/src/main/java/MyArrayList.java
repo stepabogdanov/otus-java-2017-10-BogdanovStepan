@@ -14,7 +14,13 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public int size() {
-        return objectsT.length;
+        int j = 0;
+        for (int i = 0; i <objectsT.length ; i++) {
+            if (objectsT[i] != null) {
+                j++;
+            }
+        }
+        return j;
     }
 
     @Override
@@ -73,7 +79,11 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        return objectsT;
+        Object[] objects = new Object[size()];
+        for (int i = 0; i < size(); i++) {
+          objects[i] = objectsT[i];
+        }
+        return objects;
     }
 
     @Override
