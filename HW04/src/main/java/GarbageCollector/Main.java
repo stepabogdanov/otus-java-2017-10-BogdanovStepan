@@ -10,9 +10,10 @@ public class Main {
     public static void main(String[] args) {
         long time = 0 ;
         long count = 0 ;
+        String objectName = "";
         int cnt = 0;
 
-        while (cnt < 5) {
+        while (cnt < 9) {
             int local = 10_000_000;
             Object[] array = new Object[local];
             System.out.println("Array of size: " + array.length + " created");
@@ -27,14 +28,17 @@ public class Main {
 
         List<GarbageCollectorMXBean> mxBean = ManagementFactory.getGarbageCollectorMXBeans();
         Iterator iterator  = mxBean.iterator();
-        for ( GarbageCollectorMXBean gc: mxBean ) {
-            time = gc.getCollectionTime();
-            System.out.println(Arrays.toString(gc.getMemoryPoolNames()));
-            count = gc.getCollectionCount();
+        for (GarbageCollectorMXBean gc : mxBean) {
+                time = gc.getCollectionTime();
+                System.out.println(Arrays.toString(gc.getMemoryPoolNames()));
+                count = gc.getCollectionCount();
+                objectName = gc.getObjectName().toString();
+            System.out.println("time: " + time);
+            System.out.println("count: " + count);
+            System.out.println("objrct Name: " + objectName);
         }
 
-        System.out.println("time: " + time);
-        System.out.println("count: " + count);
+
     }
 }
 
