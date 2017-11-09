@@ -46,7 +46,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>hw02size.Main</mainClass>
+                            <mainClass>hw02size.mygc.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

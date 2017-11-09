@@ -52,30 +52,37 @@ public class Main {
 
         for (GarbageCollectorMXBean gc : mxBean) {
 
-            listOfGcTime.add(gc.getCollectionTime());
-                for (Long time  : listOfGcTime) {
+            nameGC = gc.getObjectName().toString();
+            collectinsGC = String.valueOf(gc.getCollectionCount());
+            timeGC = String.valueOf(gc.getCollectionTime());
 
-                    fw.write("time: ");
-                    fw.write(String.valueOf(time));
-                    fw.append('\n');
-                    fw.flush();
-                }
-            listOfGcName.add(gc.getObjectName().toString());
-                for (String name  : listOfGcName) {
-                    fw.write("name: ");
-                    fw.write(name);
-                    fw.append('\n');
-                    fw.flush();
-                }
-            listOfGcCount.add(gc.getCollectionCount());
-                for (Long count  : listOfGcCount) {
-                    fw.write("count: ");
-                    fw.write(String.valueOf(count));
-                    fw.append('\n');
-                    fw.flush();
-                }
+//            listOfGcTime.add(gc.getCollectionTime());
+//                for (Long time  : listOfGcTime) {
+//
+//                    fw.write("time: ");
+//                    fw.write(String.valueOf(time));
+//                    fw.append('\n');
+//                    fw.flush();
+//                }
+//            listOfGcName.add(gc.getObjectName().toString());
+//                for (String name  : listOfGcName) {
+//                    fw.write("name: ");
+//                    fw.write(name);
+//                    fw.append('\n');
+//                    fw.flush();
+//                }
+//            listOfGcCount.add(gc.getCollectionCount());
+//                for (Long count  : listOfGcCount) {
+//                    fw.write("count: ");
+//                    fw.write(String.valueOf(count));
+//                    fw.append('\n');
+//                    fw.flush();
+//                }
 
 
+            fw.write(nameGC + " " + "COLLECTIONS: " + collectinsGC + " TIME: " + timeGC);
+            fw.append('\n');
+            fw.flush();
 //            System.out.println(Arrays.toString(listOfGcCount.toArray()));
 //            System.out.println(Arrays.toString(listOfGcName.toArray()));
 //            System.out.println(Arrays.toString(listOfGcTime.toArray()));
