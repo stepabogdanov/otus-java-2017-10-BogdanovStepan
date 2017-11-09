@@ -6,14 +6,16 @@ import java.util.*;
 
 
 // -XX:+UseSerialGC
-// -Xms52m
-// -Xmx52m
+//-XX:+UseParNewGC
+//-XX:+UseG1GC
+// -Xms512m
+// -Xmx512m
 
 public class Main {
     public static void main(String[] args) throws IOException {
         long timeAll = System.currentTimeMillis();
         int count = 0;
-        int size = 5_000_000;
+        int size = 3_000_000;
 
         while (count < 2) {
 
@@ -29,7 +31,7 @@ public class Main {
             System.out.println(count);
 
             if (count > 80) {
-                size *= 2000;
+                size *= 20000;
             }
 
 //        timeAll = System.currentTimeMillis() - timeAll;
@@ -42,57 +44,32 @@ public class Main {
         String collectinsGC = "";
         String timeGC = "";
 
-        File file = new File("stat.txt");
-
+        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+        List<String> jvmArgs = runtimeMXBean.getInputArguments();
         List<GarbageCollectorMXBean> mxBean = ManagementFactory.getGarbageCollectorMXBeans();
+
         List<String> listOfGcName = new ArrayList<>();
         List<Long> listOfGcTime = new ArrayList<>();
         List<Long> listOfGcCount = new ArrayList<>();
+
+        File file = new File("stat_2024.txt");
+
         FileWriter fw = new FileWriter(file);
 
         for (GarbageCollectorMXBean gc : mxBean) {
 
-            nameGC = gc.getObjectName().toString();
+            nameGC = gc.getObjectName().getKeyPropertyListString();
             collectinsGC = String.valueOf(gc.getCollectionCount());
             timeGC = String.valueOf(gc.getCollectionTime());
-
-//            listOfGcTime.add(gc.getCollectionTime());
-//                for (Long time  : listOfGcTime) {
-//
-//                    fw.write("time: ");
-//                    fw.write(String.valueOf(time));
-//                    fw.append('\n');
-//                    fw.flush();
-//                }
-//            listOfGcName.add(gc.getObjectName().toString());
-//                for (String name  : listOfGcName) {
-//                    fw.write("name: ");
-//                    fw.write(name);
-//                    fw.append('\n');
-//                    fw.flush();
-//                }
-//            listOfGcCount.add(gc.getCollectionCount());
-//                for (Long count  : listOfGcCount) {
-//                    fw.write("count: ");
-//                    fw.write(String.valueOf(count));
-//                    fw.append('\n');
-//                    fw.flush();
-//                }
-
 
             fw.write(nameGC + " " + "COLLECTIONS: " + collectinsGC + " TIME: " + timeGC);
             fw.append('\n');
             fw.flush();
-//            System.out.println(Arrays.toString(listOfGcCount.toArray()));
-//            System.out.println(Arrays.toString(listOfGcName.toArray()));
-//            System.out.println(Arrays.toString(listOfGcTime.toArray()));
-            //count = gc.getCollectionCount();
-            //objectName = gc.getObjectName().toString();
         }
 
 
         Iterator iteratorName = listOfGcName.iterator();
-        Iterator iteratorTime = listOfGcName.iterator();
+        Iterator iteratorTime = listOfGcTime.iterator();
         Iterator iteratorCollections = listOfGcName.iterator();
         while (iteratorName.hasNext()){
             fw.write(iteratorName.next().toString());
@@ -101,23 +78,8 @@ public class Main {
             fw.flush();
             fw.append('\n');
         }
-//        fw.append('\n');
-//        System.out.println("time: " + time);
-//        fw.write("time: ");
-//        fw.write(String.valueOf(time));
-//        fw.flush();
-//
-//        fw.append('\n');
-//        System.out.println("count: " + count);
-//        fw.write("count: ");
-//        fw.write(String.valueOf(count));
-//        fw.flush();
-
-        //objectName = listOfGcName.toArray();
-        //fw.append('\n');
-        //System.out.println("object Name: " + objectName);
-        //fw.write(Arrays.toString(objectName));
-        //fw.flush();
+        fw.write(Arrays.toString(jvmArgs.toArray()));
+        fw.flush();
     }
 
 }
