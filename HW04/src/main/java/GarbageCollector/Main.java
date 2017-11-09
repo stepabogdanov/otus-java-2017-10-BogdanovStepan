@@ -1,5 +1,6 @@
 package GarbageCollector;
 
+import java.io.*;
 import java.lang.management.*;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         long time = 0 ;
         long count = 0 ;
         String objectName = "";
@@ -25,6 +26,7 @@ public class Main {
 
             cnt++;
         }
+        File file = new File("stat.txt");
 
         List<GarbageCollectorMXBean> mxBean = ManagementFactory.getGarbageCollectorMXBeans();
         Iterator iterator  = mxBean.iterator();
@@ -33,9 +35,19 @@ public class Main {
                 System.out.println(Arrays.toString(gc.getMemoryPoolNames()));
                 count = gc.getCollectionCount();
                 objectName = gc.getObjectName().toString();
+
+            FileWriter fw = new FileWriter(file, true);
+
             System.out.println("time: " + time);
+            fw.write((int) time);
+            fw.flush();
             System.out.println("count: " + count);
-            System.out.println("objrct Name: " + objectName);
+            fw.write((int) count);
+            fw.flush();
+            System.out.println("objerct Name: " + objectName);
+            fw.write(objectName);
+            fw.flush();
+
         }
 
 
