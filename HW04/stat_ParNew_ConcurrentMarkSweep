@@ -1,0 +1,4 @@
+type=GarbageCollector,name=ParNew COLLECTIONS: 772 TIME: 35791
+type=GarbageCollector,name=ConcurrentMarkSweep COLLECTIONS: 320 TIME: 39965
+[-Xms512m, -Xmx512m, -XX:+UseConcMarkSweepGC]
+Up time: 254055
