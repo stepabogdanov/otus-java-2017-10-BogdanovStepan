@@ -38,11 +38,7 @@ public class LogGc {
             fileSuffix = fileSuffix.concat("_" + mapOfSuffix.get("name"));
         }
 
-        List<String> listOfGcName = new ArrayList<>();
-        List<Long> listOfGcTime = new ArrayList<>();
-        List<Long> listOfGcCount = new ArrayList<>();
-
-        File file = new File("stat_" + fileSuffix );
+        File file = new File("stat_" + fileSuffix);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for(
@@ -55,19 +51,8 @@ public class LogGc {
                     bw.append('\n');
                     bw.flush();
                 }
-            Iterator iteratorName = listOfGcName.iterator();
-            Iterator iteratorTime = listOfGcTime.iterator();
-            Iterator iteratorCollections = listOfGcName.iterator();
 
-            while(iteratorName.hasNext()) {
-                bw.write(iteratorName.next().toString());
-                bw.write(iteratorTime.next().toString());
-                bw.write(iteratorCollections.next().toString());
-                bw.append('\n');
-                bw.flush();
-            }
             bw.write(Arrays.toString(vmOptions.toArray()));
-            //fw.write("Tatal time collections lasts: " + String.valueOf(System.currentTimeMillis()-amountTime));
             bw.write("\nUp time: " + String.valueOf(upTime));
             bw.flush();
         } catch (IOException ex) {

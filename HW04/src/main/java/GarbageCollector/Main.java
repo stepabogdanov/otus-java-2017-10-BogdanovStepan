@@ -8,6 +8,7 @@ package GarbageCollector;
 -XX:+UseParNewGC
 -XX:+UseG1GC
 -XX:+UseConcMarkSweepGC
+-XX:+UseParallelGC
 -Xms512m
 -Xmx512m
 */
@@ -18,7 +19,7 @@ public class Main {
         int count = 0;
         int size = 3_000_000;
 
-        while (count < 161) {
+        while (count < 162) {
 
             Object[] array = new Object[size];
             System.out.println("Array of size: " + array.length + " created");
