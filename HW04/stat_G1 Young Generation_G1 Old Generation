@@ -1,0 +1,4 @@
+type=GarbageCollector,name=G1 Young Generation COLLECTIONS: 808 TIME: 34777
+type=GarbageCollector,name=G1 Old Generation COLLECTIONS: 0 TIME: 0
+[-Xms512m, -Xmx512m, -XX:+UseG1GC]
+Up time: 214715

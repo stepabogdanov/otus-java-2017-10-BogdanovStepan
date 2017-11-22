@@ -1,0 +1,4 @@
+type=GarbageCollector,name=Copy COLLECTIONS: 772 TIME: 52055
+type=GarbageCollector,name=MarkSweepCompact COLLECTIONS: 160 TIME: 30396
+[-Xms512m, -Xmx512m, -XX:+UseSerialGC]
+Up time: 279507

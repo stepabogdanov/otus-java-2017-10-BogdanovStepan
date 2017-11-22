@@ -1,0 +1,4 @@
+type=GarbageCollector,name=PS Scavenge COLLECTIONS: 36 TIME: 1682
+type=GarbageCollector,name=PS MarkSweep COLLECTIONS: 0 TIME: 0
+[-Xms10512m, -Xmx10512m]
+Up time: 177476
