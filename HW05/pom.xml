@@ -6,7 +6,7 @@
         <artifactId>HW02</artifactId>
         <groupId>Otus</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../HW02/pom.xml</relativePath>
+        <!--relativePath>../HW02/pom.xml</relativePath-->
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

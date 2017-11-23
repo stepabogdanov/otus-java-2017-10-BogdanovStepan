@@ -1,16 +1,24 @@
 package BigProgramm;
 
 
+import MyTestFramework.Annotaions.Before;
 import MyTestFramework.Annotaions.Test;
 import MyTestFramework.TestApps;
 
 
 public class BigProgrammTest {
+    BigProgramm instance;
+
+    @Before
+    public void initialize () {
+        instance = new BigProgramm(2, 3);
+    }
+
 
     @Test
     public void testSum() {
-        BigProgramm instanceOne = new BigProgramm(2, 3);
-        TestApps.assertEquals(5, instanceOne.sum());
+        //instance = new BigProgramm(2, 3);
+        TestApps.assertEquals(5, instance.sum());
 
     }
 
