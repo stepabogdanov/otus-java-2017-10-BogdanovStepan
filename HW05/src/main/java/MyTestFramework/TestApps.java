@@ -5,20 +5,17 @@ import MyTestFramework.Annotaions.Before;
 import MyTestFramework.Annotaions.Test;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestApps {
 
-
-    public static void runTests(Class[] clazz) throws IllegalAccessException,
-                                                    InstantiationException,
-                                                    InvocationTargetException {
+    public static void runTests(List<Class> clazz)  {
 
         List <Method> methodsList;
-        Object object;
+        Object object = null;
 
         for (Class testClass: clazz) {
             methodsList = Arrays.asList(testClass.getDeclaredMethods());
@@ -28,22 +25,39 @@ public class TestApps {
             for (Method methodTest : methodsList) {
                 for (Annotation annotationT : methodTest.getDeclaredAnnotations()) {
                     if (annotationT.annotationType().equals(Test.class)) {
-                        object = testClass.newInstance();
+                        try {
+                            object = testClass.newInstance();
+                        } catch (InstantiationException | IllegalAccessException ex) {
+                            ex.printStackTrace();
+                        }
 
                         for (Method methodBefore : methodsList) {
                             for (Annotation annotationB : methodBefore.getDeclaredAnnotations()) {
                                 if (annotationB.annotationType().equals(Before.class)) {
-                                    methodBefore.invoke(object);
+                                    try {
+                                        methodBefore.invoke(object);
+
+                                    } catch ( IllegalAccessException | InvocationTargetException ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
                             }
                         }
                         System.out.print("method: " + methodTest.getName());
-                        methodTest.invoke(object);
+                        try {
+                            methodTest.invoke(object);
+                        } catch (IllegalAccessException | InvocationTargetException ex) {
+                            ex.printStackTrace();
+                        }
 
                         for (Method methodAfter : methodsList) {
                             for (Annotation annotationA : methodAfter.getDeclaredAnnotations()) {
                                 if (annotationA.annotationType().equals(After.class)) {
-                                    methodAfter.invoke(object);
+                                    try {
+                                        methodAfter.invoke(object);
+                                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                                        ex.printStackTrace();
+                                    }
 
                                 }
                             }
@@ -72,14 +86,13 @@ public class TestApps {
     }
 
     public static void assertEquals (String a, String b) {
-       boolean val;
-       val = (a.equals(b));
-       if (val) {
-           System.out.print(" testResult: PASSED\n");
-       }
-       else {
-           System.out.print(" testResult: FAILED!!!\n");
-           //throw new RuntimeException ();
-       }
+        boolean val;
+        val = (a.equals(b));
+        if (val) {
+            System.out.print(" testResult: PASSED\n");
+        }
+        else {
+            System.out.print(" testResult: FAILED!!!\n");
+        }
     }
 }
