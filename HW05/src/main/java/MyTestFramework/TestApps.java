@@ -13,62 +13,51 @@ import java.util.*;
 public class TestApps {
 
 
-    public static void runTests(Class clazz) throws IllegalAccessException,
+    public static void runTests(Class[] clazz) throws IllegalAccessException,
                                                     InstantiationException,
-                                                            InvocationTargetException {
-        Annotation[] annotations;
-        Constructor[] constructors;
+                                                    InvocationTargetException {
+
         List <Method> methodsList;
-        Object object = null;
+        Object object;
 
-        annotations = clazz.getDeclaredAnnotations();
+        for (Class testClass: clazz) {
+            methodsList = Arrays.asList(testClass.getDeclaredMethods());
 
-        for (Annotation annotation: annotations) {
-           System.out.println(annotation.toString());
-          //object = clazz.newInstance();
-
-        }
-        constructors = clazz.getDeclaredConstructors();
-        for (Constructor constructor : constructors) {
-          //constructor.newInstance();
-        }
-
-        methodsList = Arrays.asList(clazz.getDeclaredMethods());
-
-        for (Method methodBefore : methodsList) {
-            for (Annotation annotation : methodBefore.getDeclaredAnnotations()) {
-
-                if (annotation.annotationType().equals(Before.class)) {
-                    object = clazz.newInstance();
-                    methodBefore.invoke(object);
-                    System.out.println("Before done!");
-                }
-            }
-        }
+            System.out.println(testClass.getName());
 
             for (Method methodTest : methodsList) {
-                for (Annotation annotation : methodTest.getDeclaredAnnotations()) {
-                    if (annotation.annotationType().equals(Test.class)) {
-                        Object testObjest = clazz.newInstance();
-                        //testObjest = object;
+                for (Annotation annotationT : methodTest.getDeclaredAnnotations()) {
+                    if (annotationT.annotationType().equals(Test.class)) {
+                        object = testClass.newInstance();
 
+                        for (Method methodBefore : methodsList) {
+                            for (Annotation annotationB : methodBefore.getDeclaredAnnotations()) {
+                                if (annotationB.annotationType().equals(Before.class)) {
+                                    methodBefore.invoke(object);
+                                }
+                            }
+                        }
                         System.out.print("method: " + methodTest.getName());
-                        methodTest.invoke(testObjest);
-                        object = null;
+                        methodTest.invoke(object);
+
+                        for (Method methodAfter : methodsList) {
+                            for (Annotation annotationA : methodAfter.getDeclaredAnnotations()) {
+                                if (annotationA.annotationType().equals(After.class)) {
+                                    methodAfter.invoke(object);
+
+                                }
+                            }
+                        }
+
                     }
                 }
             }
-                for (Method methodAfter : methodsList) {
-                    for (Annotation annotation : methodAfter.getDeclaredAnnotations()) {
-                        if (annotation.annotationType().equals(After.class)) {
-                            object = clazz.newInstance();
-                            methodAfter.invoke(object);
-                        }
-                    }
-                }
-
-
+        }
     }
+
+
+
+
 
     public static void assertEquals (int a, int b) {
         boolean val;

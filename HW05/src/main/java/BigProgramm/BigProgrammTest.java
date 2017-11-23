@@ -1,6 +1,7 @@
 package BigProgramm;
 
 
+import MyTestFramework.Annotaions.After;
 import MyTestFramework.Annotaions.Before;
 import MyTestFramework.Annotaions.Test;
 import MyTestFramework.TestApps;
@@ -8,6 +9,7 @@ import MyTestFramework.TestApps;
 
 public class BigProgrammTest {
     BigProgramm instance;
+    BigProgramm instanceDev;
 
     @Before
     public void initialize () {
@@ -15,18 +17,32 @@ public class BigProgrammTest {
     }
 
 
+    @After
+    public void unInitialize() {
+        instance = null;
+    }
+
     @Test
     public void testSum() {
-        //instance = new BigProgramm(2, 3);
+       // instance = new BigProgramm(2, 3);
         TestApps.assertEquals(5, instance.sum());
 
     }
 
+    @Before
+    public void InitializeDev() {
+        instanceDev = new BigProgramm(10,2);
+    }
+
     @Test
     public void testDev() {
-        BigProgramm instanceOne = new BigProgramm(10, 2);
-        TestApps.assertEquals(5, instanceOne.dev());
+        //BigProgramm instanceOne = new BigProgramm(10, 2);
+        TestApps.assertEquals(5, instanceDev.dev());
+    }
 
+    @After
+    public void unInitializeDev() {
+        instance = null;
     }
 
     @Test
