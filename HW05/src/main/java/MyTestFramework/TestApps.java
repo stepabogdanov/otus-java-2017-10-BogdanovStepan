@@ -1,53 +1,98 @@
 package MyTestFramework;
 
+import MyTestFramework.Annotaions.After;
+import MyTestFramework.Annotaions.Before;
 import MyTestFramework.Annotaions.Test;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestApps {
 
+    public static void runTests(List<Class> clazz)  {
 
-   public static void runTests(Class clazz) throws IllegalAccessException, InstantiationException, InvocationTargetException {
-       Annotation[] annotations;
-       Constructor[] constructors;
-       List <Method> methodslist = new ArrayList<>();
-       Object object = new Object();
+        List <Method> methodsList;
+        Object object = null;
 
-       annotations = clazz.getDeclaredAnnotations();
+        for (Class testClass: clazz) {
+            methodsList = Arrays.asList(testClass.getDeclaredMethods());
 
-       for (Annotation annotation: annotations) {
-           System.out.println(annotation.toString());
-          //object = clazz.newInstance();
+            System.out.println(testClass.getName());
 
-       }
-       constructors = clazz.getDeclaredConstructors();
-       for (Constructor constructor : constructors) {
-          //constructor.newInstance();
-       }
+            for (Method methodTest : methodsList) {
+                for (Annotation annotationT : methodTest.getDeclaredAnnotations()) {
+                    if (annotationT.annotationType().equals(Test.class)) {
+                        try {
+                            object = testClass.newInstance();
+                        } catch (InstantiationException | IllegalAccessException ex) {
+                            ex.printStackTrace();
+                        }
 
-       methodslist = Arrays.asList(clazz.getDeclaredMethods());
-       for (Method method : methodslist) {
-           System.out.println(method.getName());
-           object = clazz.newInstance();
-           method.invoke(object);
-       }
+                        for (Method methodBefore : methodsList) {
+                            for (Annotation annotationB : methodBefore.getDeclaredAnnotations()) {
+                                if (annotationB.annotationType().equals(Before.class)) {
+                                    try {
+                                        methodBefore.invoke(object);
 
+                                    } catch ( IllegalAccessException | InvocationTargetException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                        System.out.print("method: " + methodTest.getName());
+                        try {
+                            methodTest.invoke(object);
+                        } catch (IllegalAccessException | InvocationTargetException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        for (Method methodAfter : methodsList) {
+                            for (Annotation annotationA : methodAfter.getDeclaredAnnotations()) {
+                                if (annotationA.annotationType().equals(After.class)) {
+                                    try {
+                                        methodAfter.invoke(object);
+                                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                                        ex.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
     }
+
+
+
+
 
     public static void assertEquals (int a, int b) {
-       boolean val;
-       val = (a == b);
-       if (val) {
-           System.out.println(val);
-       }
-       else {
-           System.out.println(val=false);
-       }
-           //throw new RuntimeException ();
+        boolean val;
+        val = (a == b);
+        if (val) {
+            System.out.print(" testResult: PASSED\n");
+        }
+        else {
+            System.out.print(" testResult: FAILED!!!\n");
+            //throw new RuntimeException ();
+        }
     }
 
+    public static void assertEquals (String a, String b) {
+        boolean val;
+        val = (a.equals(b));
+        if (val) {
+            System.out.print(" testResult: PASSED\n");
+        }
+        else {
+            System.out.print(" testResult: FAILED!!!\n");
+        }
+    }
 }

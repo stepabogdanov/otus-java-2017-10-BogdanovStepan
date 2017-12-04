@@ -1,8 +1,8 @@
-package BigProgramm;
+package TestPack;
 
 // класс для тестирования
-public class BigProgramm {
-    int a, b;
+class BigProgramm {
+    private int a, b;
 
     BigProgramm(int a, int b){
 
@@ -10,7 +10,7 @@ public class BigProgramm {
         this.b = b;
     }
 
-    public  int sum() {
+    public int sum() {
         return a + b ;
     }
 
