@@ -7,7 +7,7 @@ public class Person {
      String firstName = "Bruce";
      String secondName = "Lee";
      int age = 35;
-     String[]  cars = new String[] {"opel", "audi"};
+     Car  cars = new Car ("opel", "audi");
 
     public void print() {
         System.out.println(this);
@@ -19,6 +19,6 @@ public class Person {
     public String toString() {
 
 
-        return firstName + secondName + age + Arrays.toString(cars);
+        return firstName + secondName + age + cars;
     }
 }

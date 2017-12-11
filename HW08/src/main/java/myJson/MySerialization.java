@@ -13,8 +13,18 @@ public class MySerialization {
         String fields = "";
 
         for (Field field : o.getClass().getDeclaredFields() ) {
-            //System.out.println(field.getName());
-            System.out.println(field.get(o).getClass());
+
+            if ( !field.get(o).getClass().equals(String.class) || !field.get(o).getClass().equals(Integer.class)) {
+
+                System.out.println(field.getName());
+                System.out.println(field.get(o));
+            }
+            else {
+                for (Field field1: field.getClass().getDeclaredFields()) {
+                    reflection(field1.get(field));
+
+                }
+            }
 
         }
         return fields;
