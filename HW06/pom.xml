@@ -12,6 +12,7 @@
 
     <groupId>Otus</groupId>
     <artifactId>HW06</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -25,6 +26,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>../HW08</module>
+    </modules>
 
 
 </project>

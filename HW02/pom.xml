@@ -47,7 +47,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>hw02size.mygc.Main</mainClass>
+                            <mainClass>hw02size.mygc.myJson.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

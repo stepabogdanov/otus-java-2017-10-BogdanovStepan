@@ -27,7 +27,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>GarbageCollector.Main</mainClass>
+                    <mainClass>GarbageCollector.myJson.Main</mainClass>
                     <commandlineArgs>-Xms512m -Xmx512m</commandlineArgs>
                     <!--commandlineArgs>-Xms512m -Xmx512m -XX:+UseSerialGC</commandlineArgs-->
                     <!--commandlineArgs>-Xms512m -Xmx512m -XX:+UseParNewGC</commandlineArgs-->
@@ -55,7 +55,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>GarbageCollector.Main</mainClass>
+                            <mainClass>GarbageCollector.myJson.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
