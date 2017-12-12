@@ -2,6 +2,8 @@ package myJson;
 
 
 
+
+
 import javax.json.*;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -31,9 +33,7 @@ public class MySerialization {
                  field.getType().isArray())
 
                      ) {
-                //System.out.println(field.get(o).getClass().getDeclaredFields());
                 for ( Field fieldOfObject : field.get(o).getClass().getDeclaredFields() ) {
-                    //reflection(fieldOfObject.get(field.get(o)));
 
                     System.out.println(fieldOfObject.get(field.get(o)));
 //                    jsonObject.add(
@@ -46,11 +46,13 @@ public class MySerialization {
             }
 
             if (field.getType().isArray()) {
-
+                JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
                 System.out.println("array ");
                 for (Object  array : (Object[]) field.get(o)) {
                     System.out.println(field.getName() + " _" + array);
+                    jsonArrayBuilder.add((String) array);
                 }
+                jsonObjectBuilder.add(field.getName(), jsonArrayBuilder);
             }
 
             if (    (field.getType().getName().equals(String.class.getCanonicalName()) ||
