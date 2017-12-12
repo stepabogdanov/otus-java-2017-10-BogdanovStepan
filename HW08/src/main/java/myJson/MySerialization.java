@@ -16,6 +16,7 @@ public class MySerialization {
     public static String reflection (Object o) throws IllegalAccessException {
         String fields = "";
         JsonObject jsonObject = null;
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
         for (Field field : o.getClass().getDeclaredFields() ) {
 
@@ -61,7 +62,7 @@ public class MySerialization {
                     field.getType().isPrimitive())
                     ) {
 
-                jsonObject = Json.createObjectBuilder().add(field.getName(), field.get(o).toString()).build();
+                jsonObjectBuilder.add(field.getName(), field.get(o).toString());
 
                 System.out.println(field.getName() + " _" + field.get(o));
                 //System.out.println("object: " + field.get(o).getClass() +  " _" + field.get(o).getClass());
@@ -70,7 +71,7 @@ public class MySerialization {
             }
 
         }
-
+        jsonObject = jsonObjectBuilder.build();
         System.out.println("My json " + jsonObject);
 
         return fields;
