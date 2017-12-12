@@ -21,11 +21,11 @@ public class MySerialization {
         JsonObjectBuilder enclosedObjectBuilder = Json.createObjectBuilder();
 
         for (Field field : o.getClass().getDeclaredFields() ) {
-            boolean fieldAccseseble = true;
+            boolean fieldAccessible = true;
 
             if (!field.isAccessible()) {
                 field.setAccessible(true);
-                fieldAccseseble = false;
+                fieldAccessible = false;
             }
 
             if (
@@ -51,22 +51,24 @@ public class MySerialization {
                 jsonObjectBuilder.add(field.getName(), jsonArrayBuilder);
             }
 
-            if (    (field.getType().getName().equals(String.class.getCanonicalName()) ||
-                    field.getType().getName().equals(Integer.class.getCanonicalName()) ||
-                    field.getType().getName().equals(Long.class.getCanonicalName()) ||
-                    field.getType().getName().equals(Byte.class.getCanonicalName()) ||
-                    field.getType().getName().equals(Short.class.getCanonicalName()) ||
-                    field.getType().getName().equals(Boolean.class.getCanonicalName()) ||
-                    field.getType().isPrimitive())
-                    ) {
-
-                //System.out.println(field.getName() + " _" + field.get(o));
-
+            if (field.getType().getName().equals(String.class.getCanonicalName()) ||
+                field.getType().getName().equals(Long.class.getCanonicalName()) ||
+                field.getType().getName().equals(Byte.class.getCanonicalName()) ||
+                field.getType().getName().equals(Short.class.getCanonicalName()) ||
+                field.getType().getName().equals(Boolean.class.getCanonicalName()) ||
+                field.getType().isPrimitive()) {
+                //System.out.println(field.getName() + " _" + field.get(o).toString());
                 jsonObjectBuilder.add(field.getName(), field.get(o).toString());
 
             }
 
-            if (!fieldAccseseble) {
+            if (field.getType().getName().equals(Integer.class.getCanonicalName()) ||
+                field.getType().getName().equals(int.class.getCanonicalName())) {
+
+                jsonObjectBuilder.add(field.getName(), (Integer) field.get(o));
+            }
+
+            if (!fieldAccessible) {
                 field.setAccessible(false);
             }
 
@@ -75,4 +77,13 @@ public class MySerialization {
         jsonObject = jsonObjectBuilder.build();
         return jsonObject;
     }
+
+    private  JsonObjectBuilder fieldParser (Field field) {
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        return jsonObjectBuilder;
+
+
+
+    }
+
 }

@@ -5,18 +5,18 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Car {
-    String brand;
-    String model;
-    MyYear manufactureYear;
+    private String brand;
+    private String model;
+    private MyYear manufactureYear;
 
-    Car (String brand) {
+    Car(String brand) {
         this.brand = brand;
         model = "modelS";
-        manufactureYear =  new MyYear();
-}
+        manufactureYear = new MyYear();
+    }
 
-//    @Override
-//    public String toString() {
-//        return brand;
-//    }
+    public String getBrand() {
+        return brand;
+    }
+
 }
