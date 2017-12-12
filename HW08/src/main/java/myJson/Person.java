@@ -7,7 +7,7 @@ public class Person {
      String firstName = "Bruce";
      String secondName = "Lee";
      int age = 35;
-     Car  car = new Car ("Audi");
+     Car  car = new Car ("Tesla");
      String[] nickname = new String[]{"Dragon", "Fist"};
 
     public void print() {

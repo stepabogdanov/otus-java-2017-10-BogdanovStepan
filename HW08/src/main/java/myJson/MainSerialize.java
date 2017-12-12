@@ -7,7 +7,7 @@ public class MainSerialize {
         Person person = new Person();
         OnePerson onePerson = new OnePerson();
         //person.print();
-        MySerialization.reflection(person);
+        System.out.println(MySerialization.reflection(person));
         //MySerialization.reflection(onePerson);
 
 
