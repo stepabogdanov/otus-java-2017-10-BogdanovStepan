@@ -15,12 +15,18 @@ public class MySerialization {
         return string;
     }
 
-    public static JsonObject reflection (Object o) throws IllegalAccessException {
+     static JsonObject reflection (Object o) throws IllegalAccessException {
         JsonObject jsonObject = null;
-        JsonObjectBuilder jsonObjectBuilder = null;
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         JsonObjectBuilder enclosedObjectBuilder = Json.createObjectBuilder();
 
         for (Field field : o.getClass().getDeclaredFields() ) {
+            boolean fieldAccseseble = true;
+
+            if (!field.isAccessible()) {
+                field.setAccessible(true);
+                fieldAccseseble = false;
+            }
 
             if (
                     !(field.getType().getName().equals(String.class.getCanonicalName()) ||
@@ -33,29 +39,13 @@ public class MySerialization {
                  field.getType().isArray())
 
                      ) {
-
-                for ( Field fieldOfObject : field.get(o).getClass().getDeclaredFields() ) {
-
-                    //System.out.println(fieldOfObject.getName() + " _" + fieldOfObject.get(field.get(o)));
-                   // enclosedObjectBuilder.add(fieldOfObject.getName(), "en_" +fieldOfObject.get(field.get(o)).toString());
-
-
-                    //reflection(field.get(o));
-
-                }
-
-                jsonObjectBuilder.add(field.getName(), reflection(field.get(o)));
-                //reflection(field.get(o));
-
-
+            jsonObjectBuilder.add(field.getName(), reflection(field.get(o)));
 
             }
 
             if (field.getType().isArray()) {
                 JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-                //System.out.println("array ");
                 for (Object  array : (Object[]) field.get(o)) {
-                    //System.out.print(field.getName() + " _" + array + '\n');
                     jsonArrayBuilder.add((String) array);
                 }
                 jsonObjectBuilder.add(field.getName(), jsonArrayBuilder);
@@ -70,22 +60,19 @@ public class MySerialization {
                     field.getType().isPrimitive())
                     ) {
 
+                //System.out.println(field.getName() + " _" + field.get(o));
 
-                System.out.println(field.getName() + " _" + field.get(o));
-                jsonObjectBuilder = Json.createObjectBuilder();
                 jsonObjectBuilder.add(field.getName(), field.get(o).toString());
 
-                //System.out.println("object: " + field.get(o).getClass() +  " _" + field.get(o).getClass());
+            }
 
-//                jsonObjectBuilder.add(field.getName(), enclosedObjectBuilder);
-
+            if (!fieldAccseseble) {
+                field.setAccessible(false);
             }
 
         }
 
-
         jsonObject = jsonObjectBuilder.build();
-        //System.out.println("My json " + jsonObject);
         return jsonObject;
     }
 }

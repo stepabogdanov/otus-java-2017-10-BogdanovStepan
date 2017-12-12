@@ -4,7 +4,7 @@ package myJson;
 import java.util.Arrays;
 
 public class Person {
-     String firstName = "Bruce";
+     private String firstName = "Bruce";
      String secondName = "Lee";
      int age = 35;
      Car  car = new Car ("Tesla");
