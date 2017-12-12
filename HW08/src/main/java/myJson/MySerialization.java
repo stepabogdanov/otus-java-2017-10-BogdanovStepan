@@ -33,15 +33,17 @@ public class MySerialization {
                  field.getType().isArray())
 
                      ) {
+
+                JsonObjectBuilder enclosedObjectBuilder = Json.createObjectBuilder();
                 for ( Field fieldOfObject : field.get(o).getClass().getDeclaredFields() ) {
 
-                    System.out.println(fieldOfObject.get(field.get(o)));
-//                    jsonObject.add(
-//                            Json.createArrayBuilder()
-//                                    .add(fieldOfObject.toString(), fieldOfObject.get(field.get(o).toString())));
+                    System.out.println(fieldOfObject.getName() + " _" + fieldOfObject.get(field.get(o)));
+                    enclosedObjectBuilder.add(fieldOfObject.getName(), fieldOfObject.get(field.get(o)).toString());
+
 
                 }
-                    //reflection(field.get(o));
+                jsonObjectBuilder.add(field.getName(), enclosedObjectBuilder);
+
 
             }
 

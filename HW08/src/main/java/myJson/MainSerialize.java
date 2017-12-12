@@ -2,7 +2,7 @@ package myJson;
 
 import com.google.gson.Gson;
 
-public class Main {
+public class MainSerialize {
     public static void main(String[] args) throws IllegalAccessException {
         Person person = new Person();
         OnePerson onePerson = new OnePerson();

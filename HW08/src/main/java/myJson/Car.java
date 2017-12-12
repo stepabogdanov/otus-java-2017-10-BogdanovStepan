@@ -7,12 +7,12 @@ import java.util.Date;
 public class Car {
     String brand;
     String model;
-    Year manufactureYear;
+    MyYear manufactureYear;
 
     Car (String brand) {
         this.brand = brand;
         model = "modelS";
-        manufactureYear = Year.now();
+        manufactureYear =  new MyYear();
 }
 
 //    @Override
