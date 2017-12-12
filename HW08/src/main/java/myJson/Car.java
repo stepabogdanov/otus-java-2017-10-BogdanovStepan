@@ -5,15 +5,18 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Car {
-    private String brand = "2";
-    private String model  = "modelS";
-    private Year manufactureYear;
-Car (String ... strings) {
-    brand.concat(Arrays.toString(strings));
+    String brand;
+    String model;
+    Year manufactureYear;
+
+    Car (String brand) {
+        this.brand = brand;
+        model = "modelS";
+        manufactureYear = Year.now();
 }
 
-    @Override
-    public String toString() {
-        return brand;
-    }
+//    @Override
+//    public String toString() {
+//        return brand;
+//    }
 }

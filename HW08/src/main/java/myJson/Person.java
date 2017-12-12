@@ -7,7 +7,8 @@ public class Person {
      String firstName = "Bruce";
      String secondName = "Lee";
      int age = 35;
-     String[]  cars = new String[] {"opel", "audi"};
+     Car  car = new Car ("Audi");
+     String[] nickname = new String[]{"Dragon", "Fist"};
 
     public void print() {
         System.out.println(this);
@@ -15,10 +16,10 @@ public class Person {
 
 
 
-    @Override
-    public String toString() {
-
-
-        return firstName + secondName + age + cars;
-    }
+//    @Override
+//    public String toString() {
+//
+//
+//        return firstName + secondName + age + car;
+//    }
 }
