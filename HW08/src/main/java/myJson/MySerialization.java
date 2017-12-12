@@ -14,16 +14,26 @@ public class MySerialization {
 
         for (Field field : o.getClass().getDeclaredFields() ) {
 
-            if ( !field.get(o).getClass().equals(String.class) || !field.get(o).getClass().equals(Integer.class)) {
+            if (
+                    !(field.getType().getName().equals(String.class.getCanonicalName()) ||
+                 field.getType().getName().equals(Integer.class.getCanonicalName()) ||
+                 field.getType().getName().equals(Long.class.getCanonicalName()) ||
+                 field.getType().getName().equals(Byte.class.getCanonicalName()) ||
+                 field.getType().getName().equals(Short.class.getCanonicalName()) ||
+                 field.getType().getName().equals(Boolean.class.getCanonicalName()) ||
+                 field.getType().isPrimitive())
 
-                System.out.println(field.getName());
-                System.out.println(field.get(o));
+                     ) {
+
+                System.out.println(field.getName() + " _" + field.getType().getName());
+                //System.out.println(field.get(o) +  " " + field.get(o).getClass());
             }
             else {
-                for (Field field1: field.getClass().getDeclaredFields()) {
-                    reflection(field1.get(field));
+                reflection(field.get(o));
 
-                }
+//                for (Field fieldOfObject: field.get(o).getClass().getDeclaredFields()) {
+//
+//                }
             }
 
         }

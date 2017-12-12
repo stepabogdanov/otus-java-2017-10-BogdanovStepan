@@ -7,7 +7,7 @@ public class Person {
      String firstName = "Bruce";
      String secondName = "Lee";
      int age = 35;
-     Car  cars = new Car ("opel", "audi");
+     String[]  cars = new String[] {"opel", "audi"};
 
     public void print() {
         System.out.println(this);
