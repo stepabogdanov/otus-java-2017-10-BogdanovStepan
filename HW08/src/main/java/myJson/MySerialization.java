@@ -17,7 +17,7 @@ public class MySerialization {
     }
 
      static JsonObject reflection (Object o) throws IllegalAccessException {
-        JsonObject jsonObject = null;
+        JsonObject jsonObject;
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         JsonObjectBuilder enclosedObjectBuilder = Json.createObjectBuilder();
 
@@ -54,14 +54,9 @@ public class MySerialization {
             }
 
             if (field.getType().isAssignableFrom(AbstractSet.class)) {
-                System.out.println("SET - detected!!");
                 JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-
-                for (Object setObject: (Object[])  field.get(o)) {
-                    jsonArrayBuilder.add()
-
-                }
-                jsonObjectBuilder.add(field.getName(), )
+                jsonArrayBuilder.add(field.get(o).toString());
+                jsonObjectBuilder.add(field.getName(), jsonArrayBuilder);
             }
 
 
