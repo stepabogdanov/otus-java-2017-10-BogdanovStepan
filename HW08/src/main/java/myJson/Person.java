@@ -2,16 +2,21 @@ package myJson;
 
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 public class Person {
      private String firstName = "Bruce";
-     String secondName = "Lee";
-     int age = 32;
-     Car  car;
+     private String secondName = "Lee";
+     private int age = 32;
+     private Car  car;
+     private Set<String> setOfAbility;
+
      String[] nickname = new String[]{"Dragon", "Fist"};
 
-     Person (String nameOfcar) {
-         car =  new Car (nameOfcar);
+     Person (String nameOfCar, Set<String> setOfAbility) {
+         this.setOfAbility = setOfAbility;
+         car =  new Car (nameOfCar);
 
      }
 

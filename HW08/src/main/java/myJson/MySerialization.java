@@ -6,7 +6,8 @@ package myJson;
 
 import javax.json.*;
 import java.lang.reflect.Field;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class MySerialization {
 
@@ -24,7 +25,7 @@ public class MySerialization {
             boolean fieldAccessible = true;
 
             if (!field.isAccessible()) {
-                field.setAccessible(true);
+                field.setAccessible(true); //
                 fieldAccessible = false;
             }
 
@@ -35,6 +36,7 @@ public class MySerialization {
                  field.getType().getName().equals(Byte.class.getCanonicalName()) ||
                  field.getType().getName().equals(Short.class.getCanonicalName()) ||
                  field.getType().getName().equals(Boolean.class.getCanonicalName()) ||
+                 field.getType().isAssignableFrom(AbstractSet.class) ||
                  field.getType().isPrimitive() ||
                  field.getType().isArray())
 
@@ -50,6 +52,20 @@ public class MySerialization {
                 }
                 jsonObjectBuilder.add(field.getName(), jsonArrayBuilder);
             }
+
+            if (field.getType().isAssignableFrom(AbstractSet.class)) {
+                System.out.println("SET - detected!!");
+                JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+
+                for (Object setObject: (Object[])  field.get(o)) {
+                    jsonArrayBuilder.add()
+
+                }
+                jsonObjectBuilder.add(field.getName(), )
+            }
+
+
+
 
             if (field.getType().getName().equals(String.class.getCanonicalName()) ||
                 field.getType().getName().equals(Long.class.getCanonicalName()) ||
