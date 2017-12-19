@@ -16,7 +16,7 @@ public class MySerialization {
         return string;
     }
 
-     static JsonObject reflection (Object o) throws IllegalAccessException {
+    JsonObject toJson (Object o) throws IllegalAccessException {
         JsonObject jsonObject;
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         JsonObjectBuilder enclosedObjectBuilder = Json.createObjectBuilder();
@@ -37,11 +37,13 @@ public class MySerialization {
                  field.getType().getName().equals(Short.class.getCanonicalName()) ||
                  field.getType().getName().equals(Boolean.class.getCanonicalName()) ||
                  field.getType().isAssignableFrom(AbstractSet.class) ||
+                 field.getType().isAssignableFrom(AbstractList.class) ||
                  field.getType().isPrimitive() ||
-                 field.getType().isArray())
+                 field.getType().isArray()
+                    )
 
                      ) {
-            jsonObjectBuilder.add(field.getName(), reflection(field.get(o)));
+            jsonObjectBuilder.add(field.getName(), toJson(field.get(o)));
 
             }
 
@@ -53,7 +55,9 @@ public class MySerialization {
                 jsonObjectBuilder.add(field.getName(), jsonArrayBuilder);
             }
 
-            if (field.getType().isAssignableFrom(AbstractSet.class)) {
+            if (field.getType().isAssignableFrom(AbstractSet.class) ||
+                field.getType().isAssignableFrom(AbstractList.class) ) {
+
                 JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
                 jsonArrayBuilder.add(field.get(o).toString());
                 jsonObjectBuilder.add(field.getName(), jsonArrayBuilder);

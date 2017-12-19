@@ -10,11 +10,11 @@ public class Person {
      private String secondName = "Lee";
      private int age = 32;
      private Car  car;
-     private Set<String> setOfAbility;
+     private List<String> setOfAbility;
 
      String[] nickname = new String[]{"Dragon", "Fist"};
 
-     Person (String nameOfCar, Set<String> setOfAbility) {
+     Person (String nameOfCar, List<String> setOfAbility) {
          this.setOfAbility = setOfAbility;
          car =  new Car (nameOfCar);
 
