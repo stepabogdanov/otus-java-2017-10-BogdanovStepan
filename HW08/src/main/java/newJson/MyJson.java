@@ -7,11 +7,15 @@ import java.lang.reflect.Field;
 
 public class MyJson {
         JsonObject jsonObject;
+        String string;
+        Integer valueInteger;
+        Long valueLong;
+
+
 
     public JsonObject toJson(Object o) {
 
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-        JsonObjectBuilder enclosedObjectBuilder = Json.createObjectBuilder();
 
         for (Field field : o.getClass().getDeclaredFields()) {
             boolean fieldAccessible = true;
@@ -34,8 +38,12 @@ public class MyJson {
                     jsonObjectBuilder.add(field.getName(), parser.executeArray());
                 }
 
+                if (parser.executeInt() == null &&
+                        parser.executeString() == null &&
+                        parser.executeArray() == null ) {
+                    jsonObjectBuilder.add(field.getName(), toJson(field.get(o)));
+                }
 
-                //System.out.println(jsonObject);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }

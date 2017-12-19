@@ -41,12 +41,15 @@ public class Parser {
     }
     public JsonArrayBuilder executeArray () throws IllegalAccessException {
         ArrayParser arrayParser = new ArrayParser();
+        ListParser listParser = new ListParser();
+
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         jsonArrayBuilder = arrayParser.parse(field, o);
-
             if (jsonArrayBuilder != null) {
-                //return jsonArrayBuilder;
+                return jsonArrayBuilder;
             }
+        jsonArrayBuilder = listParser.parse(field, o);
         return null;
     }
+
 }

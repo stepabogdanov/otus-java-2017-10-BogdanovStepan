@@ -15,7 +15,15 @@ public class NewJsonMain {
         Person person = new Person("Tesla", set);
 
         System.out.println(myJson.toJson(onePerson));
-        //System.out.println(myJson.toJson(person));
+        System.out.println(myJson.toJson(person));
+//        int[] array = new int[]{1, 2};
+//        Object object = null;
+//
+//        object = array;
+//        //object = (int[]) object;
+//
+//        System.out.println(Arrays.toString((int[]) object));
+//        System.out.println(Arrays.toString(array));
 
     }
 }

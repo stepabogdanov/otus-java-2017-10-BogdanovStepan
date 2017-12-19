@@ -9,7 +9,7 @@ public class Car {
     private String model;
     private MyYear manufactureYear;
 
-    Car(String brand) {
+    public Car(String brand) {
         this.brand = brand;
         model = "modelS";
         manufactureYear = new MyYear();
