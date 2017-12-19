@@ -30,6 +30,10 @@ public class MyJson {
                     jsonObjectBuilder.add(field.getName(), parser.executeString());
                 }
 
+                if (parser.executeArray() != null) {
+                    jsonObjectBuilder.add(field.getName(), parser.executeArray());
+                }
+
 
                 //System.out.println(jsonObject);
             } catch (IllegalAccessException e) {

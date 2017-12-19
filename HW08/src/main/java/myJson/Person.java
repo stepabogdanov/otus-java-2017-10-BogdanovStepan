@@ -14,7 +14,7 @@ public class Person {
 
      String[] nickname = new String[]{"Dragon", "Fist"};
 
-     Person (String nameOfCar, List<String> setOfAbility) {
+     public Person(String nameOfCar, List<String> setOfAbility) {
          this.setOfAbility = setOfAbility;
          car =  new Car (nameOfCar);
 

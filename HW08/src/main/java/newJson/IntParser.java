@@ -11,16 +11,10 @@ public class IntParser {
 
 
     public Integer parse(Field field, Object o) throws IllegalAccessException {
-        if (field.getType().equals(int.class) || field.getType().equals(Integer.class)) {
-
-
-
-          return (Integer) o;
-
-
+        if (field.getType().equals(int.class) ||
+            field.getType().equals(Integer.class)) {
+            return (Integer) o;
         }
-
-        //System.out.println(jsonObject);
         return null;
     }
 }
