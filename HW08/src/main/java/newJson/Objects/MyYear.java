@@ -1,4 +1,4 @@
-package myJson;
+package newJson.Objects;
 
 public class MyYear {
     String year;

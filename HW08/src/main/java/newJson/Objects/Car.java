@@ -1,8 +1,4 @@
-package myJson;
-
-import java.time.Year;
-import java.util.Arrays;
-import java.util.Date;
+package newJson.Objects;
 
 public class Car {
     private String brand;

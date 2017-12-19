@@ -1,18 +1,15 @@
-package newJson;
+package newJson.MyJson;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
-public class ArrayParser {
-    JsonArrayBuilder jsonArrayBuilder;
+class ArrayParser {
 
-    public JsonArrayBuilder parse (Field field, Object fieldsValue) throws IllegalAccessException {
+    @SuppressWarnings("ConstantConditions")
+    JsonArrayBuilder parse (Field field, Object fieldsValue) {
         if (field.getType().isArray()) {
-            jsonArrayBuilder = Json.createArrayBuilder();
+            JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
             if (fieldsValue.getClass().getTypeName().equals(int[].class.getCanonicalName())) {
                 for (Object array : (int[]) fieldsValue) {
                     jsonArrayBuilder.add((int) array);
