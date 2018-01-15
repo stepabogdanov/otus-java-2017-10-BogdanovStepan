@@ -4,6 +4,8 @@ import base.DBService;
 import connnection.DBServiceConnection;
 import connnection.DBServiceUpdate;
 
+import java.util.List;
+
 public class JdbcMain {
     public static void main(String[] args) throws Exception {
         new JdbcMain().run();
@@ -19,7 +21,11 @@ public class JdbcMain {
             dbService.prepareTables();
             dbService.insertUsers("Stepan" , "Alex");
             dbService.getUserName(3);
-            dbService.dropTable();
+            List<String> names = dbService.getAllNames();
+            for (String name : names) {
+                System.out.println(name);
+            }
+            //dbService.dropTable();
         }
 
 

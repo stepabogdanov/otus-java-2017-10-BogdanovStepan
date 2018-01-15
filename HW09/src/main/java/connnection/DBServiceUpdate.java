@@ -3,6 +3,8 @@ package connnection;
 import executor.Executor;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBServiceUpdate extends DBServiceConnection {
 
@@ -44,5 +46,18 @@ public class DBServiceUpdate extends DBServiceConnection {
         executor.execUpdate(DROP_TABLE);
     }
 
+    @Override
+    public List<String> getAllNames() throws SQLException {
+        Executor executor = new Executor(getConnection());
+        return  executor.execQuery("select name from user" , result -> {
+            List<String>  userList = new ArrayList<>();
+            while (!result.isLast()) {
+                result.next();
+                userList.add(result.getString("name"));
+            }
+            return userList;
+
+        });
+    }
 }
 

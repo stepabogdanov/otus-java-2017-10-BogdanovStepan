@@ -5,6 +5,7 @@ import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DBServiceConnection implements DBService {
     private final Connection connection;
@@ -50,6 +51,11 @@ public class DBServiceConnection implements DBService {
     @Override
     public void dropTable() throws SQLException {
 
+    }
+
+    @Override
+    public List<String> getAllNames() throws SQLException {
+        return null;
     }
 
     @Override
