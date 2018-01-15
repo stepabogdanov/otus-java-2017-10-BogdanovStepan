@@ -1,12 +1,23 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>HW02</artifactId>
+        <groupId>Otus</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../HW02/pom.xml</relativePath>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>Otus</groupId>
     <artifactId>HW09</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--properties>
+        <maven.compiler.cource>1.8</maven.compiler.cource>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties-->
 
     <dependencies>
         <dependency>
@@ -20,6 +31,9 @@
             <version>1.0.2</version>
         </dependency>
     </dependencies>
+
+
+
 
 
 </project>
