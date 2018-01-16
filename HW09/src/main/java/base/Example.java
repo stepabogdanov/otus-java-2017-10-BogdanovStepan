@@ -10,6 +10,7 @@ public class Example {
         Class w = Class.forName(UserDataSet.class.getCanonicalName());
         System.out.println(UserDataSet.class.getCanonicalName());
         Object o = w.getConstructor().newInstance();
+        System.out.println(String.format("select * from user where id =%d", 7));
     }
 
 }

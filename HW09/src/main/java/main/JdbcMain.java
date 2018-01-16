@@ -28,7 +28,8 @@ public class JdbcMain {
             //dbService.getUserName(3);
             List<String> names = dbService.getAllNames();
             System.out.println(names);
-            dbService.loadUser2(2, UserDataSet.class);
+            System.out.println(dbService.loadUser2(2, UserDataSet.class));
+            System.out.println(dbService.loadUser2(8, UserDataSet.class));
             //dbService.dropTable();
 
         }

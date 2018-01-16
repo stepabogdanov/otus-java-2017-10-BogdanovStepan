@@ -4,7 +4,9 @@ public class UserDataSet extends DataSet {
     private String name;
     private int age;
 
+
     public UserDataSet() {
+
     }
 
     public UserDataSet(String name, int age) {
@@ -20,8 +22,13 @@ public class UserDataSet extends DataSet {
         return age;
     }
 
-    @Override
+
     public long getId() {
         return id;
     }
+    @Override
+    public String toString(){
+        return "UserDataSet: [name: " + name +  " age: " + age + " id: " +  getId() + "]";
+    }
+
 }

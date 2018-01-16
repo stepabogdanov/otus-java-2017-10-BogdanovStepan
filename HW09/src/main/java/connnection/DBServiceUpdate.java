@@ -79,49 +79,48 @@ public class DBServiceUpdate extends DBServiceConnection {
 
 
     public <T extends DataSet>  T loadUser2(long id, Class<T> clazz) throws SQLException, NoSuchMethodException,
-                                IllegalAccessException, InvocationTargetException,
-                                InstantiationException, ClassNotFoundException {
-
+            IllegalAccessException, InvocationTargetException,
+            InstantiationException, ClassNotFoundException, NoSuchFieldException {
         Class <?> c = Class.forName(clazz.getCanonicalName());
 
-        Object dataSet = c.newInstance();
+        T dataSet = (T) c.newInstance();
 
 
         List<String> fieldStringList = new ArrayList<>();
         fieldStringList.add("id");
-        Map<String, Object> columnName = new HashMap();
-
-        for (Field field: clazz.getDeclaredFields()) {
-         fieldStringList.add(field.getName());
-         //field.get(clazz);
-//            field.set();
-        }
-        System.out.println("fields are: " + fieldStringList);
-
+        Map<String, Object> mapTable = new HashMap();
 
         Executor exec =  new Executor(getConnection());
 
-        columnName = exec.execQuery("select * from user", result -> {
+        mapTable = exec.execQuery(String.format("select * from user where id = %d" , id), result -> {
+
             int count = result.getMetaData().getColumnCount();
-            Map<String, Object> mapTable = new HashMap<>();
+            Map<String, Object> mappedTable = new HashMap<>();
+
+            result.next();
 
             for (int i =1 ; i<=count; i++) {
-
-                mapTable.put(result.getMetaData().getColumnName(i), result.getObject(Math.toIntExact(i));
-
+                String colName = result.getMetaData().getColumnName(i);
+                //result.next();
+                Object colValue =  result.getObject(colName);
+                mappedTable.put(colName, colValue);
             }
 
-            return stringList;
+            //System.out.println(mappedTable);
+            return mappedTable;
         });
-        System.out.println("column are: " + columnName);
 
-        System.out.println(columnName.containsAll(fieldStringList));
+        for (Field field: dataSet.getClass().getDeclaredFields()) {
+            fieldStringList.add(field.getName());
+            if (mapTable.containsKey(field.getName())) {
+                field.setAccessible(true);
+                field.set(dataSet, mapTable.get(field.getName()));
+                field.setAccessible(false);
+            }
+        }
 
-        if
-
-
-
-        return null;
+        //System.out.println(mapTable);
+        return dataSet;
     }
 }
 
