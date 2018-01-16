@@ -1,31 +1,36 @@
 package main;
 
 import base.DBService;
-import connnection.DBServiceConnection;
+import base.UserDataSet;
 import connnection.DBServiceUpdate;
 
 import java.util.List;
 
 public class JdbcMain {
+
     public static void main(String[] args) throws Exception {
         new JdbcMain().run();
 
     }
 
     private void run() throws Exception {
-        //try (DBService dbService = new DBServiceConnection())
+
+        UserDataSet user1 = new UserDataSet("Ivan", 35);
+        UserDataSet user2 = new UserDataSet("Alex", 34);
         try (DBService dbService = new DBServiceUpdate())
 
         {
             System.out.println(dbService.getMetaData());
-            dbService.prepareTables();
-            dbService.insertUsers("Stepan" , "Alex");
-            dbService.getUserName(3);
+            //dbService.prepareTables();
+            //dbService.addNames("Stepan", "Alex");
+            //dbService.saveUser(user1);
+            //dbService.saveUser(user2);
+            //dbService.getUserName(3);
             List<String> names = dbService.getAllNames();
-            for (String name : names) {
-                System.out.println(name);
-            }
+            System.out.println(names);
+            dbService.loadUser2(2, UserDataSet.class);
             //dbService.dropTable();
+
         }
 
 

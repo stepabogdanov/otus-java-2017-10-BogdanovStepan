@@ -1,8 +1,11 @@
 package connnection;
 
 import base.DBService;
+import base.DataSet;
+import base.UserDataSet;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -44,7 +47,7 @@ public class DBServiceConnection implements DBService {
     }
 
     @Override
-    public void insertUsers(String... names) throws SQLException {
+    public void addNames(String... names) throws SQLException {
 
     }
 
@@ -55,6 +58,21 @@ public class DBServiceConnection implements DBService {
 
     @Override
     public List<String> getAllNames() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public void saveUser(UserDataSet user) throws SQLException {
+
+    }
+
+    @Override
+    public UserDataSet loadUser(long id, Class<UserDataSet> clazz) throws SQLException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return null;
+    }
+
+    @Override
+    public <T extends DataSet> T loadUser2(long id, Class<T> clazz) throws SQLException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException {
         return null;
     }
 

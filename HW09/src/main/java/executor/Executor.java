@@ -33,11 +33,13 @@ public class Executor {
 
 
     public <T> T execQuery(String query, TResultHandler<T> handler) throws SQLException {
-        Statement stmt = connection.createStatement();
-        stmt.execute(query);
-        ResultSet resultSet = stmt.getResultSet();
-        return handler.handle(resultSet);
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute(query);
+            ResultSet resultSet = stmt.getResultSet();
+            return handler.handle(resultSet);
+        }
 
     }
+
 
 }
