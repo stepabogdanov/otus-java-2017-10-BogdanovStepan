@@ -3,16 +3,12 @@ package connnection;
 
 import base.DBService;
 import base.DataSet;
-import base.UserDataSet;
 import executor.Executor;
-
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import static connnection.ConnectionHelper.getConnection;
-
 
 public class DBServiceConnect implements DBService {
     private final Connection connection;

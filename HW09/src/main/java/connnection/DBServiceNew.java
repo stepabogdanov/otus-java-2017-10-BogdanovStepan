@@ -2,18 +2,12 @@ package connnection;
 
 import base.DataSet;
 import executor.Executor;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-
-/// HOMEWORK !!!
 
 public class DBServiceNew extends DBServiceConnect {
     private Connection connection;
@@ -69,8 +63,6 @@ public class DBServiceNew extends DBServiceConnect {
 
         T dataSet = clazz.getConstructor().newInstance();
 
-        List<String> fieldStringList = new ArrayList<>();
-        fieldStringList.add("id");
         Map<String, Object> mapTable;
         Executor exec =  new Executor(getConnection());
         mapTable = exec.execQuery(String.format(SELECT_FROM_USER, id), result -> {
@@ -94,7 +86,6 @@ public class DBServiceNew extends DBServiceConnect {
         });
         try {
             for (Field field : dataSet.getClass().getDeclaredFields()) {
-                fieldStringList.add(field.getName());
                 if (mapTable.containsKey(field.getName())) {
                     field.setAccessible(true);
                     field.set(dataSet, mapTable.get(field.getName()));
