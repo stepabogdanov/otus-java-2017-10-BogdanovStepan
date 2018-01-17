@@ -13,7 +13,8 @@ public class Example {
         Object o = w.getConstructor().newInstance();
         //System.out.println(String.format("select * from user where id =%d", 7));
         NewUser user = new NewUser("Alex", 54, "5296841");
-        System.out.println(user);
+        UserDataSet user2 = new UserDataSet("Olga", 50);
+        System.out.println(ReflectionHelper.getAllFields(user2));
 
         //System.out.println(ReflectionHelper.getAllFields(user));
     }

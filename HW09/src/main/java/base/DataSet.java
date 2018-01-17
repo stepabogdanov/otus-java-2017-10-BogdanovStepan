@@ -2,19 +2,9 @@ package base;
 
 public abstract class DataSet {
 
-    public long id;
-
-    public DataSet() {
-
-
-    }
+    protected long id;
 
     public long getId() {
         return id;
     }
-
-
-
-
-
 }

@@ -1,11 +1,8 @@
 package main;
 
 import base.DBService;
-import base.DataSet;
-import base.NewUser;
 import base.UserDataSet;
 import connnection.DBServiceNew;
-import connnection.DBServiceUpdate;
 
 import java.util.List;
 
@@ -20,22 +17,26 @@ public class JdbcMain {
 
         UserDataSet user1 = new UserDataSet("Ivan", 35);
         UserDataSet user2 = new UserDataSet("Alex", 34);
-        DataSet user3 = new NewUser("Alex", 34, "89058356752");
+        UserDataSet user3 = new UserDataSet("OLga", 22);
+        UserDataSet user4 = new UserDataSet("Mikel", 29);
+        UserDataSet user5 = new UserDataSet("Pavel", 45);
         try (DBService dbService = new DBServiceNew())
 
         {
             System.out.println(dbService.getMetaData());
+            dbService.dropTable();
             dbService.prepareTables();
-            //dbService.addNames("Stepan", "Alex");
-            //dbService.saveUser(user1);
-            //dbService.saveUser(user2);
+            dbService.addNames("Stepan", "Alex");
+            dbService.saveUser(user1);
+            dbService.saveUser(user2);
             dbService.saveUser(user3);
-            //dbService.getUserName(3);
+            dbService.getUserName(90);
             List<String> names = dbService.getAllNames();
-            System.out.println(names);
+
             System.out.println(dbService.loadUser2(2, UserDataSet.class));
-            System.out.println(dbService.loadUser2(8, UserDataSet.class));
-            //dbService.dropTable();
+            System.out.println(dbService.loadUser2(5, UserDataSet.class));
+            System.out.println(dbService.loadUser2(3, UserDataSet.class));
+            System.out.println(dbService.loadUser2(99, UserDataSet.class));
 
         }
 

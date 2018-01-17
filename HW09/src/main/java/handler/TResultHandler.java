@@ -1,4 +1,4 @@
-package logger;
+package handler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

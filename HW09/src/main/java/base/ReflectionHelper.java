@@ -8,7 +8,7 @@ public class ReflectionHelper {
 
     private static List<Field> fieldList = new ArrayList<>();
 
-    static List<Field> getAllFields(Object object) throws IllegalAccessException, InstantiationException {
+    public static List<Field> getAllFields(Object object) throws IllegalAccessException, InstantiationException {
 
         boolean fieldAccessible = false;
 
@@ -18,13 +18,12 @@ public class ReflectionHelper {
                     fieldAccessible = true;
                 }
                 fieldList.add(field);
+                if (fieldAccessible) {
+                    field.setAccessible(false);
+                }
             }
 
-        return getAllFields(object);
+        return fieldList;
     }
-    private List<Field> getAllClasses(Object o) throws InstantiationException, IllegalAccessException {
 
-
-        return getAllFields(o.getClass().getSuperclass());
-    }
 }

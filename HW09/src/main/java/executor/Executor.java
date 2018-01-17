@@ -1,7 +1,7 @@
 package executor;
 
-import logger.ResultHandler;
-import logger.TResultHandler;
+import handler.ResultHandler;
+import handler.TResultHandler;
 
 import java.sql.*;
 
@@ -38,7 +38,7 @@ public class Executor {
 
     }
 
-    public void execPrepQuery(String update, PResultHandler prepare) throws SQLException {
+    public void execPreparedQuery(String update, PResultHandler prepare) throws SQLException {
         try {
             PreparedStatement pStatement = connection.prepareStatement(update);
             prepare.accept(pStatement);

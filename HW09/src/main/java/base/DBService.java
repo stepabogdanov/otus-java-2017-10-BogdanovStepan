@@ -11,8 +11,10 @@ public interface DBService extends AutoCloseable {
     void addNames(String... names) throws SQLException;
     void dropTable() throws SQLException;
     List<String> getAllNames() throws SQLException;
-    void saveUser(UserDataSet user) throws SQLException;
-    UserDataSet loadUser (long id, Class<UserDataSet> clazz) throws SQLException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException;
-    <T extends DataSet>  T loadUser2(long id, Class<T> clazz) throws SQLException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException, NoSuchFieldException;
-    <T extends DataSet> void saveUser(T user) throws SQLException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException;
+    <T extends DataSet>  T loadUser2(long id, Class<T> clazz) throws SQLException, NoSuchMethodException,
+                                                                    IllegalAccessException, InvocationTargetException,
+                                                                        InstantiationException, ClassNotFoundException,
+                                                                        NoSuchFieldException;
+    <T extends DataSet> void saveUser(T user) throws SQLException, IllegalAccessException, NoSuchMethodException,
+                                                                InvocationTargetException, InstantiationException;
 }

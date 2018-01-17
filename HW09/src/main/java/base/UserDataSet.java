@@ -7,7 +7,6 @@ public class UserDataSet extends DataSet {
 
     public UserDataSet() {
         super();
-
     }
 
     public UserDataSet(String name, int age) {
