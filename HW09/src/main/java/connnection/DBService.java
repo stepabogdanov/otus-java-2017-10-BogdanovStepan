@@ -1,4 +1,6 @@
-package base;
+package connnection;
+
+import base.DataSet;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
