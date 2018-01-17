@@ -3,9 +3,10 @@ package base;
 public class UserDataSet extends DataSet {
     private String name;
     private int age;
-
+    private long id;
 
     public UserDataSet() {
+        super();
 
     }
 
@@ -22,13 +23,13 @@ public class UserDataSet extends DataSet {
         return age;
     }
 
-
     public long getId() {
         return id;
     }
+
     @Override
     public String toString(){
-        return "UserDataSet: [name: " + name +  " age: " + age + " id: " +  getId() + "]";
+        return "UserDataSet: [ id: " +  getId() + " name: " + getName() +  " age: " + getAge() + "]";
     }
 
 }

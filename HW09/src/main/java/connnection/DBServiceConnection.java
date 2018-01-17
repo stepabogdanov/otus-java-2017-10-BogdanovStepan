@@ -77,6 +77,11 @@ public class DBServiceConnection implements DBService {
     }
 
     @Override
+    public <T extends DataSet> void saveUser(T user) throws SQLException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+
+    }
+
+    @Override
     public void close() throws Exception {
 
     }

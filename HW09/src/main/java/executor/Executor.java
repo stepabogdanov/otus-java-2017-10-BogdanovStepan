@@ -3,10 +3,7 @@ package executor;
 import logger.ResultHandler;
 import logger.TResultHandler;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Executor {
     private Connection connection;
@@ -41,5 +38,18 @@ public class Executor {
 
     }
 
+    public void execPrepQuery(String update, PResultHandler prepare) throws SQLException {
+        try {
+            PreparedStatement pStatement = connection.prepareStatement(update);
+            prepare.accept(pStatement);
+            pStatement.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
+    @FunctionalInterface
+    public interface PResultHandler {
+        void accept(PreparedStatement statement) throws SQLException;
+    }
 }

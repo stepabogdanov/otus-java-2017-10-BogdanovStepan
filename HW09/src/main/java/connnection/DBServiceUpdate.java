@@ -71,12 +71,8 @@ public class DBServiceUpdate extends DBServiceConnection {
         });
     }
 
-    @Override
-    public void saveUser(UserDataSet user) throws SQLException {
-        Executor exec = new Executor(getConnection());
-        exec.execUpdate(String.format(INSERT_USER, user.getName(), user.getAge()));
-    }
 
+/// HOMEWORK !!!
 
     public <T extends DataSet>  T loadUser2(long id, Class<T> clazz) throws SQLException, NoSuchMethodException,
             IllegalAccessException, InvocationTargetException,
@@ -100,9 +96,15 @@ public class DBServiceUpdate extends DBServiceConnection {
             result.next();
 
             for (int i =1 ; i<=count; i++) {
+                Object colValue = null;
                 String colName = result.getMetaData().getColumnName(i);
-                //result.next();
-                Object colValue =  result.getObject(colName);
+                //System.out.println("colName:!!! " + colName);
+                try {
+                    colValue = result.getObject(colName);
+                } catch (SQLException ex) {
+                    System.out.println(String.format("Table doesn't have requested id (%d)", id));
+                    return mappedTable;
+                }
                 mappedTable.put(colName, colValue);
             }
 
@@ -117,6 +119,7 @@ public class DBServiceUpdate extends DBServiceConnection {
                 field.set(dataSet, mapTable.get(field.getName()));
                 field.setAccessible(false);
             }
+
         }
 
         //System.out.println(mapTable);
