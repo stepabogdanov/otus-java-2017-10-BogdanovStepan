@@ -45,9 +45,9 @@ public class DBServiceConnect implements DBService {
         try {
             Executor executor = new Executor(getConnection());
 
-            executor.execQuery(String.format(SHOW, id), result -> {
+            return executor.execQuery(String.format(SHOW, id), result -> {
                 result.next();
-                System.out.println("name: " + result.getString("name"));
+                return "name: " + result.getString("name");
             });
         } catch (Exception ex) {
             System.out.println(String.format(WARNING, id));

@@ -30,7 +30,7 @@ public class JdbcMain {
             dbService.saveUser(user1);
             dbService.saveUser(user2);
             dbService.saveUser(user3);
-            dbService.getUserName(90);
+            System.out.println(dbService.getUserName(3));
             List<String> names = dbService.getAllNames();
 
             System.out.println(dbService.loadUser2(2, UserDataSet.class));
