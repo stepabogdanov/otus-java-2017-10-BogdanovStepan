@@ -52,17 +52,18 @@ public class DBServiceNew extends DBServiceConnect {
                 statement.execute();
 
             });
-            id = executor.execQuery("SELECT MAX(id) from user;", result -> {
+            id = executor.execQuery("SELECT last_insert_id();", result -> {
                 result.next();
                 return result.getLong(1);
             });
             mappedObject.put("id", id);
-//            System.out.println(mappedObject);
+            System.out.println(mappedObject);
             getConnection().commit();
         } catch (SQLException ex) {
             getConnection().rollback();
         } finally {
             getConnection().setAutoCommit(true);
+            saveToCash();
         }
 
 
@@ -110,13 +111,16 @@ public class DBServiceNew extends DBServiceConnect {
         return dataSet;
     }
 
-    private <E> void saveToCash(E user) {
+    private void saveToCash() {
+        CashEngineImpl cash  = new CashEngineImpl (5, 100, 1000, false);
+        cash.put(new CashElement(mappedObject.get("id"), mappedObject));
+        System.out.println(cash);
 
 
 
 
 
-        return;
+        //return;
 
     }
 }

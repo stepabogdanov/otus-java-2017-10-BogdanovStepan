@@ -1,6 +1,5 @@
 package newJson.Objects;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,5 +30,5 @@ public class Person {
         if (!that.setOfAbility.equals(setOfAbility)) return false;
 
         return true;
-}
+    }
 }
