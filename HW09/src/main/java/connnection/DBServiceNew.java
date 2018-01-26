@@ -98,4 +98,10 @@ public class DBServiceNew extends DBServiceConnect {
         }
     return dataSet;
     }
+
+    private void E saveToCash (E user) {
+        int i=0;
+        return ;
+
+    }
 }

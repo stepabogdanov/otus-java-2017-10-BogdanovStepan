@@ -24,19 +24,23 @@ public class JdbcMain {
 
         {
             System.out.println(dbService.getMetaData());
-            dbService.dropTable();
-            dbService.prepareTables();
-            dbService.addNames("Stepan", "Alex");
-            dbService.saveUser(user1);
-            dbService.saveUser(user2);
-            dbService.saveUser(user3);
-            System.out.println(dbService.getUserName(3));
+//            dbService.dropTable();
+//            dbService.prepareTables();
+//            dbService.addNames("Stepan", "Alex");
+//            dbService.saveUser(user1);
+//            dbService.saveUser(user2);
+//            dbService.saveUser(user3);
+//            dbService.saveUser(user4);
+            dbService.saveUser(user5);
+//            System.out.println(dbService.getUserName(3));
             List<String> names = dbService.getAllNames();
 
-            System.out.println(dbService.loadUser2(2, UserDataSet.class));
-            System.out.println(dbService.loadUser2(5, UserDataSet.class));
-            System.out.println(dbService.loadUser2(3, UserDataSet.class));
-            System.out.println(dbService.loadUser2(99, UserDataSet.class));
+            System.out.println(names);
+
+//            System.out.println(dbService.loadUser2(2, UserDataSet.class));
+//            System.out.println(dbService.loadUser2(5, UserDataSet.class));
+//            System.out.println(dbService.loadUser2(3, UserDataSet.class));
+//            System.out.println(dbService.loadUser2(99, UserDataSet.class));
 
         }
 

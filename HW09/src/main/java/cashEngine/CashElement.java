@@ -29,7 +29,7 @@ public class CashElement<K,V> {
     }
 
     public void setLastAccessed(long lastAccessTime) {
-        this.lastAccessTime = getCreationTime();
+        this.lastAccessTime = getCurrentTime();
     }
 
     public long getLastAccessTime() {
