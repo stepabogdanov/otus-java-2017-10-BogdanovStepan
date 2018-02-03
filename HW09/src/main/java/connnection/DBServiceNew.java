@@ -2,6 +2,8 @@ package connnection;
 
 import base.DataSet;
 import cashEngine.CashElement;
+import cashEngine.CashEngine;
+import cashEngine.CashEngineHandler;
 import cashEngine.CashEngineImpl;
 import executor.Executor;
 import java.lang.reflect.Field;
@@ -21,13 +23,9 @@ public class DBServiceNew extends DBServiceConnect {
     private static final String NAME_COLUMN = "name";
     private static final String AGE_COLUMN = "age";
 
-    private Map<String, Object> mappedObject = new HashMap<>();
-
-
     @Override
-    public <T extends DataSet> void saveUser(T user) throws SQLException, IllegalAccessException, NoSuchMethodException,
-            InvocationTargetException, InstantiationException {
-
+    public <T extends DataSet> void saveUser(T user) throws SQLException, IllegalAccessException {
+        Map<String, Object> mappedObject = new HashMap<>();
         long id = 0;
         boolean fieldAccessible = false;
         for (Field field : user.getClass().getDeclaredFields()) {
@@ -57,15 +55,13 @@ public class DBServiceNew extends DBServiceConnect {
                 return result.getLong(1);
             });
             mappedObject.put("id", id);
-            System.out.println(mappedObject);
+            //System.out.println(mappedObject);
             getConnection().commit();
         } catch (SQLException ex) {
             getConnection().rollback();
         } finally {
             getConnection().setAutoCommit(true);
-            saveToCash();
         }
-
 
     }
 
@@ -111,17 +107,51 @@ public class DBServiceNew extends DBServiceConnect {
         return dataSet;
     }
 
-    private void saveToCash() {
-        CashEngineImpl cash  = new CashEngineImpl (5, 100, 1000, false);
-        cash.put(new CashElement(mappedObject.get("id"), mappedObject));
-        System.out.println(cash);
+    @Override
+    public <T extends DataSet, K, V> CashElement<K, V> saveUserWithCash(T userS) throws SQLException, IllegalAccessException {
+        Long id = null;
+        boolean fieldAccessible = false;
+        Map<String, Object> mappedObjectCash = new HashMap<>();
+        CashElement<K, V> cashElement;
 
+        for (Field field : userS.getClass().getDeclaredFields()) {
+            if (!field.isAccessible()) {
+                field.setAccessible(true);
+                fieldAccessible = true;
+            }
+            mappedObjectCash.put(field.getName(),field.get(userS));
+            if (fieldAccessible)  {
+                field.setAccessible(false);
+            }
+        }
 
+        try {
+            Executor executor = new Executor(getConnection());
+            getConnection().setAutoCommit(false);
 
+            executor.execPreparedQuery(INSERT_USERS, statement -> {
+                statement.setObject(1, mappedObjectCash.get(NAME_COLUMN));
 
+                statement.setObject(2, mappedObjectCash.get(AGE_COLUMN));
+                statement.execute();
 
-        //return;
+            });
+            id = executor.execQuery("SELECT last_insert_id();", result -> {
+                result.next();
+                return result.getLong(1);
+            });
+            mappedObjectCash.put("id", id);
+            //System.out.println(mappedObject);
+            getConnection().commit();
 
+        } catch (SQLException ex) {
+            getConnection().rollback();
+        } finally {
+            getConnection().setAutoCommit(true);
+        }
+
+        return cashElement = new CashElement<>( (K) id, (V) mappedObjectCash);
     }
+
 }
 

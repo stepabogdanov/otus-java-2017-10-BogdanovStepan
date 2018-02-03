@@ -35,4 +35,9 @@ public class CashElement<K,V> {
     public long getLastAccessTime() {
         return lastAccessTime;
     }
+
+    @Override
+    public String toString() {
+        return getValue().toString();
+    }
 }

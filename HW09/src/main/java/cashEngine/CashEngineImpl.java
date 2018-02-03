@@ -11,12 +11,9 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
     private final long edleTimeMs;
     private final boolean isEternal;
     private final Map<K, CashElement<K,V>> elements = new LinkedHashMap<>();
-    private final Timer timer = new Timer();
+    //private final Timer timer = new Timer();
 
     private int hit = 0;
-
-
-
     private int miss = 0;
 
     public CashEngineImpl(int maxElement, long lifeTimeMs, long edleTimeMs, boolean isEternal) {
@@ -28,6 +25,11 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
 
     @Override
     public void put(CashElement<K, V> element) {
+        if (elements.size() == maxElement) {
+            K firstKey = elements.keySet().iterator().next();
+            elements.remove(firstKey);
+        }
+
         K key = element.getKey();
         elements.put(key, element);
 
@@ -35,17 +37,22 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
 
     @Override
     public CashElement<K, V> get(K key) {
-        return null;
+        CashElement<K, V> element = elements.get(key);
+        if (element == null) {
+            miss++;
+        }
+        else hit++;
+        return element;
     }
 
     @Override
     public int getHitCount() {
-        return 0;
+        return hit;
     }
 
     @Override
     public int getMissCount() {
-        return 0;
+        return miss;
     }
 
     @Override

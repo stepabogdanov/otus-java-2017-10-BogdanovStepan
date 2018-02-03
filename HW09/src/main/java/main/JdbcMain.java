@@ -1,11 +1,17 @@
 package main;
 
+import cashEngine.CashElement;
+import cashEngine.CashEngine;
+import cashEngine.CashEngineImpl;
 import connnection.DBService;
 import base.UserDataSet;
 import connnection.DBServiceNew;
 
 import java.util.List;
+import java.util.Map;
 
+
+// mysql> SET GLOBAL time_zone = '+3:00';
 public class JdbcMain {
 
     public static void main(String[] args) throws Exception {
@@ -24,18 +30,28 @@ public class JdbcMain {
 
         {
             System.out.println(dbService.getMetaData());
-//            dbService.dropTable();
+            dbService.dropTable();
             dbService.prepareTables();
 //            dbService.addNames("Stepan", "Alex");
-            dbService.saveUser(user1);
-            dbService.saveUser(user2);
-            dbService.saveUser(user3);
-            dbService.saveUser(user4);
-            dbService.saveUser(user5);
-//            System.out.println(dbService.getUserName(3));
-            List<String> names = dbService.getAllNames();
+            CashEngine<Long, Map> cashEngine = new CashEngineImpl<>(3, 30, 30, true);
+            cashEngine.put(dbService.saveUserWithCash(user1));
+            cashEngine.put(dbService.saveUserWithCash(user2));
+            cashEngine.put(dbService.saveUserWithCash(user3));
+            cashEngine.put(dbService.saveUserWithCash(user4));
+            cashEngine.put(dbService.saveUserWithCash(user5));
+            cashEngine.put(dbService.saveUserWithCash(user1));
 
-            System.out.println(names);
+            CashElement cashElement = cashEngine.get(4l);
+            CashElement cashElement4 = cashEngine.get(1l);
+
+            System.out.println("hit: " + cashEngine.getHitCount());
+            System.out.println("mis: " + cashEngine.getMissCount());
+
+            //System.out.println(dbService.getUserName(3));
+//            List<String> names = dbService.getAllNames();
+
+//            System.out.println(names);
+
 
 //            System.out.println(dbService.loadUser2(2, UserDataSet.class));
 //            System.out.println(dbService.loadUser2(5, UserDataSet.class));

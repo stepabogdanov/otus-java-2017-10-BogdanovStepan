@@ -2,12 +2,14 @@ package connnection;
 
 
 import base.DataSet;
+import cashEngine.CashElement;
 import executor.Executor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DBServiceConnect implements DBService {
     private final Connection connection;
@@ -58,9 +60,13 @@ public class DBServiceConnect implements DBService {
 
 
     @Override
-    public void dropTable () throws SQLException {
+    public void dropTable () {
         Executor executor = new Executor(getConnection());
-        executor.execUpdate(DROP_TABLE);
+        try {
+            executor.execUpdate(DROP_TABLE);
+        } catch (SQLException e) {
+            System.out.println("Table doesn't exist!!!");
+        }
     }
 
     @Override
@@ -101,6 +107,11 @@ public class DBServiceConnect implements DBService {
     @Override
     public <T extends DataSet> void saveUser(T user) throws SQLException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
 
+    }
+
+    @Override
+    public <T extends DataSet, K, V> CashElement<K, V> saveUserWithCash(T user) throws SQLException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+        return null;
     }
 
     @Override
