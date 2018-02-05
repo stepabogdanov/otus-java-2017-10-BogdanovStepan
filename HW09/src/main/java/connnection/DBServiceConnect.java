@@ -3,6 +3,7 @@ package connnection;
 
 import base.DataSet;
 import cashEngine.CashElement;
+import cashEngine.CashEngineImpl;
 import executor.Executor;
 
 import java.lang.reflect.Field;
@@ -110,8 +111,8 @@ public class DBServiceConnect implements DBService {
     }
 
     @Override
-    public void getCash() {
-
+    public <K, V> CashEngineImpl<K,V> getCash() {
+        return null;
     }
 
     @Override

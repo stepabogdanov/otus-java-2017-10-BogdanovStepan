@@ -38,12 +38,14 @@ public class JdbcMain {
             dbService.saveUser(user3);
             dbService.saveUser(user4);
             dbService.saveUser(user5);
-            dbService.getCash();
+
 
             System.out.println(dbService.loadUser2(2, UserDataSet.class));
             System.out.println(dbService.loadUser2(4, UserDataSet.class));
 
-
+            System.out.println("miss: " + dbService.getCash().getMissCount());
+            System.out.println("hit: " + dbService.getCash().getHitCount());
+            System.out.println(dbService.getCash());
 
 
 
