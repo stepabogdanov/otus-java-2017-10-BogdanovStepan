@@ -1,6 +1,4 @@
 package connnection;
-
-
 import base.DataSet;
 import cashEngine.CashElement;
 import cashEngine.CashEngineImpl;
@@ -17,9 +15,7 @@ import java.util.Map;
 
 public class DBServiceConnect implements DBService {
     private final Connection connection;
-
     public DBServiceConnect() {
-
         connection = ConnectionHelper.getConnection();
     }
 
@@ -35,9 +31,6 @@ public class DBServiceConnect implements DBService {
     private static final String NAME = "name";
     private static final String SELECT_FROM_USER = "select * from user where id = %d";
     private static final String WARNING_TABLE_MISMATCH = "Warning table mismatch!!";
-
-
-
 
     public void prepareTables () {
             Executor logExecutor = new Executor(getConnection());
@@ -78,7 +71,6 @@ public class DBServiceConnect implements DBService {
 
      return null;
     }
-
 
     @Override
     public void dropTable () {
@@ -231,7 +223,6 @@ public class DBServiceConnect implements DBService {
     public <T extends DataSet> void saveUserCash(T user) throws SQLException {
         ;
     }
-
 
     @Override
     public void close() throws Exception {

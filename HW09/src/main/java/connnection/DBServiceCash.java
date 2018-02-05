@@ -30,15 +30,12 @@ public class DBServiceCash extends DBServiceConnect {
 
     @Override
     public <T extends DataSet> T loadUser2(long id, Class<T> clazz) {
-        Object cashID = null;
-        cashID = cash.get(id).getValue();
-
-        if (cashID == null) {
+        CashElement cashElement = cash.get(id);
+        if (cashElement == null) {
             return super.loadUser2(id, clazz);
         } else {
-            return (T) cashID;
+            return (T) cashElement.getValue();
         }
-
     }
 
     @Override
@@ -101,9 +98,6 @@ public class DBServiceCash extends DBServiceConnect {
         }
 
         cash.put(new CashElement<>((Long) mappedObjectCash.get("id"), dataSet));
-
-
-
     }
     public <K, V> CashEngineImpl<K, V> getCash() {
         //System.out.println(cash.get(4l));

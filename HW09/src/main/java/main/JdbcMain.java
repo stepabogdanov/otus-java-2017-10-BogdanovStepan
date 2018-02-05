@@ -40,8 +40,12 @@ public class JdbcMain {
             dbService.saveUser(user5);
 
 
-            System.out.println(dbService.loadUser2(2, UserDataSet.class));
             System.out.println(dbService.loadUser2(4, UserDataSet.class));
+            System.out.println(dbService.loadUser2(5, UserDataSet.class));
+            Thread.sleep(1000);
+            System.out.println(dbService.loadUser2(1, UserDataSet.class));
+            System.out.println(dbService.loadUser2(2, UserDataSet.class));
+            System.out.println(dbService.loadUser2(3, UserDataSet.class));
 
             System.out.println("miss: " + dbService.getCash().getMissCount());
             System.out.println("hit: " + dbService.getCash().getHitCount());

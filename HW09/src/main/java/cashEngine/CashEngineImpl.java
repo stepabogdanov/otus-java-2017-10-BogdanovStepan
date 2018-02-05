@@ -18,9 +18,9 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
 
     private CashEngineImpl(int maxElement, long lifeTimeMs, long edleTimeMs, boolean isEternal) {
         this.maxElement = maxElement;
-        this.lifeTimeMs = lifeTimeMs; //> 0 ? lifeTimeMs : 0;
-        this.edleTimeMs = edleTimeMs; //> 0 ? edleTimeMs :0;
-        this.isEternal = isEternal;
+        this.lifeTimeMs = lifeTimeMs > 0 ? lifeTimeMs : 0;
+        this.edleTimeMs = edleTimeMs > 0 ? edleTimeMs : 0;
+        this.isEternal = lifeTimeMs == 0 && edleTimeMs ==0 || isEternal;
     }
 
     @Override
