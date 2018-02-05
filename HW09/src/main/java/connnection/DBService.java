@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface DBService extends AutoCloseable {
+    void getCash();
 
     String getMetaData();
 
@@ -26,5 +27,9 @@ public interface DBService extends AutoCloseable {
 
     <T extends DataSet> void saveUser(T user) throws SQLException;
 
-   // <T extends DataSet, K,V> CashElement<K, V> saveUserWithCash(T user);
+    <T extends DataSet> void saveUserCash(T user) throws SQLException;
+
+
+
+
 }

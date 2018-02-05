@@ -16,7 +16,7 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
     private int hit = 0;
     private int miss = 0;
 
-    public CashEngineImpl(int maxElement, long lifeTimeMs, long edleTimeMs, boolean isEternal) {
+    private CashEngineImpl(int maxElement, long lifeTimeMs, long edleTimeMs, boolean isEternal) {
         this.maxElement = maxElement;
         this.lifeTimeMs = lifeTimeMs; //> 0 ? lifeTimeMs : 0;
         this.edleTimeMs = edleTimeMs; //> 0 ? edleTimeMs :0;
@@ -59,13 +59,14 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
     public void dispose() {
 
     }
-//    private CashEngine<K, V> buildDefault(){
-//        CashEngineImpl<K, V> cashEngine = new CashEngineImpl<>(5,100,1000, false) ;
-//        return cashEngine;
-//    }
 
     @Override
     public String toString() {
         return elements.toString();
+    }
+
+    public static <K,V> CashEngineImpl <K,V> createEngine(int maxElement, long lifeTimeMs, long edleTimeMs, boolean isEternal) {
+         return new CashEngineImpl<>(maxElement, lifeTimeMs, edleTimeMs, isEternal);
+
     }
 }

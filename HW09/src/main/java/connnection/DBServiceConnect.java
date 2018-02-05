@@ -2,9 +2,11 @@ package connnection;
 
 
 import base.DataSet;
+import cashEngine.CashElement;
 import executor.Executor;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class DBServiceConnect implements DBService {
 
     public DBServiceConnect() {
 
-        connection = getConnection();
+        connection = ConnectionHelper.getConnection();
     }
 
     private static final String CREATE_TABLE_USER = "create table if not exists user (id bigint(20) auto_increment, name varchar(255), age int(3), primary key (id))";
@@ -30,6 +32,11 @@ public class DBServiceConnect implements DBService {
     private static final String INSERT_USERS = "insert into user (name, age) values (?, ?)";
     private static final String AGE = "age";
     private static final String NAME = "name";
+    private static final String SELECT_FROM_USER = "select * from user where id = %d";
+    private static final String WARNING_TABLE_MISMATCH = "Warning table mismatch!!";
+
+
+
 
     public void prepareTables () {
             Executor logExecutor = new Executor(getConnection());
@@ -102,7 +109,12 @@ public class DBServiceConnect implements DBService {
         return null;
     }
 
-       @Override
+    @Override
+    public void getCash() {
+
+    }
+
+    @Override
     public String getMetaData() {
         try {
             return  "Connected to " + getConnection().getMetaData().getURL() + "\n" +
@@ -117,8 +129,54 @@ public class DBServiceConnect implements DBService {
 
     }
 
-    @Override
     public <T extends DataSet> T loadUser2(long id, Class<T> clazz) {
+        try {
+            T dataSet = clazz.getConstructor().newInstance();
+
+
+            Map<String, Object> mapTable = null;
+            Executor exec = new Executor(getConnection());
+            try {
+                mapTable = exec.execQuery(String.format(SELECT_FROM_USER, id), result -> {
+
+                    int count = result.getMetaData().getColumnCount();
+                    Map<String, Object> mappedTable = new HashMap<>();
+
+                    result.next();
+                    for (int i = 1; i <= count; i++) {
+                        Object colValue;
+                        String colName = result.getMetaData().getColumnName(i);
+                        try {
+                            colValue = result.getObject(colName);
+                        } catch (SQLException ex) {
+                            System.out.println(String.format(WARNING, id));
+                            return mappedTable;
+                        }
+                        mappedTable.put(colName, colValue);
+                    }
+                    return mappedTable;
+                });
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                for (Field field : dataSet.getClass().getDeclaredFields()) {
+                    if (mapTable.containsKey(field.getName())) {
+                        field.setAccessible(true);
+                        field.set(dataSet, mapTable.get(field.getName()));
+                        field.setAccessible(false);
+                    }
+                }
+            } catch (IllegalAccessException ex) {
+                System.out.println(WARNING_TABLE_MISMATCH);
+                return dataSet;
+            }
+
+            return dataSet;
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException |
+                InstantiationException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -168,10 +226,11 @@ public class DBServiceConnect implements DBService {
 
     }
 
-//    @Override
-//    public <T extends DataSet, K, V> CashElement<K, V> saveUserWithCash(T user) {
-//        return null;
-//    }
+    @Override
+    public <T extends DataSet> void saveUserCash(T user) throws SQLException {
+        ;
+    }
+
 
     @Override
     public void close() throws Exception {
