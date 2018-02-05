@@ -14,6 +14,9 @@ import java.util.Map;
 // mysql> SET GLOBAL time_zone = '+3:00';
 public class JdbcMain {
 
+    public static CashEngine<Long, Map> cashEngine = new CashEngineImpl<>(3, 30, 30, true);
+
+
     public static void main(String[] args) throws Exception {
         new JdbcMain().run();
 
@@ -33,7 +36,6 @@ public class JdbcMain {
             dbService.dropTable();
             dbService.prepareTables();
 //            dbService.addNames("Stepan", "Alex");
-            CashEngine<Long, Map> cashEngine = new CashEngineImpl<>(3, 30, 30, true);
             cashEngine.put(dbService.saveUserWithCash(user1));
             cashEngine.put(dbService.saveUserWithCash(user2));
             cashEngine.put(dbService.saveUserWithCash(user3));
