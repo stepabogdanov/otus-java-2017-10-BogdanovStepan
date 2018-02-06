@@ -21,12 +21,16 @@ import java.util.Map;
 public class DBServiceCash extends DBServiceConnect {
     private Connection connection;
 
+    private int maxElement = 2;
+    private long lifeTimeMs = 100;
+    private long edileTimeMs = 100;
+    private boolean isEternal = true;
     private static final String INSERT_USERS = "insert into user (name, age) values (?, ?)";
     private static final String WARNING = "Warning table doesn't have requested id (%d)";
     private static final String NAME = "name";
     private static final String AGE = "age";
-    private  CashEngineImpl<Long, DataSet> cash = CashEngineImpl.createEngine(2, 10, 10, true);
-   private static int ii = 0;
+    private  CashEngineImpl<Long, DataSet> cash = CashEngineImpl.createEngine(maxElement, lifeTimeMs, edileTimeMs, isEternal);
+    private static int ii = 0;
 
     @Override
     public <T extends DataSet> T loadUser2(long id, Class<T> clazz) {
@@ -100,10 +104,9 @@ public class DBServiceCash extends DBServiceConnect {
         cash.put(new CashElement<>((Long) mappedObjectCash.get("id"), dataSet));
     }
     public <K, V> CashEngineImpl<K, V> getCash() {
-        //System.out.println(cash.get(4l));
-        //System.out.println("Cash: " + cash);
         return (CashEngineImpl<K, V>) cash;
     }
+
 }
 
 

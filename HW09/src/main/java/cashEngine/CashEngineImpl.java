@@ -1,16 +1,18 @@
 package cashEngine;
 
+import java.lang.ref.SoftReference;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Timer;
 
 public class CashEngineImpl <K,V> implements CashEngine<K,V> {
     private static final int TIME_THRESHOLD = 5;
-    private final int maxElement;
-    private final long lifeTimeMs;
-    private final long edleTimeMs;
-    private final boolean isEternal;
-    private final Map<K, CashElement<K,V>> elements = new LinkedHashMap<>();
+    private int maxElement;
+    private long lifeTimeMs;
+    private long edleTimeMs;
+    private boolean isEternal;
+    private final Map<K, SoftReference<CashElement<K,V>>> elements = new LinkedHashMap<>();
     //private final Timer timer = new Timer();
 
     private int hit = 0;
@@ -31,13 +33,17 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
         }
 
         K key = element.getKey();
-        elements.put(key, element);
+        elements.put(key, new SoftReference<>(element));
 
     }
 
     @Override
     public CashElement<K, V> get(K key) {
-        CashElement<K, V> element = elements.get(key);
+        CashElement<K, V> element = null;
+
+        if (elements.get(key) != null) {
+            element = elements.get(key).get();
+        }
         if (element == null) {
             miss++;
         }
@@ -62,11 +68,31 @@ public class CashEngineImpl <K,V> implements CashEngine<K,V> {
 
     @Override
     public String toString() {
-        return elements.toString();
+        Map<K,  CashElement<K,V>> map = new HashMap<>();
+        for (K key : elements.keySet()) {
+            map.put(key, elements.get(key).get());
+        }
+        return map.toString();
     }
 
     public static <K,V> CashEngineImpl <K,V> createEngine(int maxElement, long lifeTimeMs, long edleTimeMs, boolean isEternal) {
          return new CashEngineImpl<>(maxElement, lifeTimeMs, edleTimeMs, isEternal);
 
+    }
+
+    public void setMaxElement(int maxElement) {
+        this.maxElement = maxElement;
+    }
+
+    public void setLifeTimeMs(long lifeTimeMs) {
+        this.lifeTimeMs = lifeTimeMs;
+    }
+
+    public void setEdleTimeMs(long edleTimeMs) {
+        this.edleTimeMs = edleTimeMs;
+    }
+
+    public void setEternal(boolean eternal) {
+        isEternal = eternal;
     }
 }
