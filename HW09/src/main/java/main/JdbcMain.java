@@ -1,12 +1,8 @@
 package main;
 
-import base.DataSet;
-import cashEngine.CashElement;
-import cashEngine.CashEngine;
-import cashEngine.CashEngineImpl;
 import connnection.DBService;
 import base.UserDataSet;
-import connnection.DBServiceCash;
+import connnection.DBServiceCashe;
 
 
 // mysql> SET GLOBAL time_zone = '+3:00';
@@ -24,13 +20,13 @@ public class JdbcMain {
         UserDataSet user3 = new UserDataSet("Olga", 22);
         UserDataSet user4 = new UserDataSet("Mikel", 29);
         UserDataSet user5 = new UserDataSet("Pavel", 40);
-        try (DBService dbService = new DBServiceCash())
+        try (DBService dbService = new DBServiceCashe())
 
         {
             System.out.println(dbService.getMetaData());
             dbService.dropTable();
             dbService.prepareTables();
-//            dbService.addNames("Stepan", "Alex");
+            dbService.addNames("Stepan", "Alex");
 
 
             dbService.saveUser(user1);
@@ -47,13 +43,13 @@ public class JdbcMain {
             System.out.println(dbService.loadUser2(2, UserDataSet.class));
             System.out.println(dbService.loadUser2(3, UserDataSet.class));
 
-            System.out.println("miss: " + dbService.getCash().getMissCount());
-            System.out.println("hit: " + dbService.getCash().getHitCount());
-            System.out.println(dbService.getCash());
+            System.out.println("miss: " + dbService.getCashe().getMissCount());
+            System.out.println("hit: " + dbService.getCashe().getHitCount());
+            System.out.println(dbService.getCashe());
 
 
 
-//            System.out.println(dbService.getUserName(5));
+            System.out.println(dbService.getUserName(4));
 //            List<String> names = dbService.getAllNames();
 
 //            System.out.println(names);

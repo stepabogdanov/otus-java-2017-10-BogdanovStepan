@@ -1,11 +1,10 @@
 package cashEngine;
 
-import base.DataSet;
-
+@SuppressWarnings("WeakerAccess")
 public interface CashEngine<K,V> {
 
-    void put(CashElement<K,V> dataSetElement);
-    CashElement <K, V> get(K key);
+    void put(CasheElement<K,V> dataSetElement);
+    CasheElement<K, V> get(K key);
 
     int getHitCount();
     int getMissCount();

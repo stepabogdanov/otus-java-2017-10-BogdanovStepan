@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 
 public class Executor {
-    private Connection connection;
+    private final Connection connection;
 
     public Executor(Connection connection) {
         this.connection = connection;
@@ -42,7 +42,7 @@ public class Executor {
 
     }
 
-    public void execPreparedQuery(String update, PResultHandler prepare) throws SQLException {
+    public void execPreparedQuery(String update, PResultHandler prepare) {
         try {
             PreparedStatement pStatement = connection.prepareStatement(update);
             prepare.accept(pStatement);
@@ -52,7 +52,7 @@ public class Executor {
         }
     }
 
-    public <E> E execPreparedQuery(String query, PResultHandlerT<E> prepare) throws SQLException {
+    public <E> E execPreparedQuery(String query, PResultHandlerT<E> prepare) {
         try {
             PreparedStatement pStatement = connection.prepareStatement(query);
             return prepare.accept(pStatement);

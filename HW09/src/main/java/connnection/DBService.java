@@ -1,16 +1,13 @@
 package connnection;
 
 import base.DataSet;
-import cashEngine.CashElement;
-import cashEngine.CashEngineImpl;
+import cashEngine.CasheEngineImpl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 public interface DBService extends AutoCloseable {
-    <K,V> CashEngineImpl getCash();
+    <K,V> CasheEngineImpl getCashe();
 
     String getMetaData();
 

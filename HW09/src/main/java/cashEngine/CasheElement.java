@@ -1,12 +1,12 @@
 package cashEngine;
 
-public class CashElement<K,V> {
+public class CasheElement<K,V> {
     private final K key;
     private final V value;
     private  final long creationTime;
     private long lastAccessTime;
 
-    public CashElement(K key, V value) {
+    public CasheElement(K key, V value) {
         this.key = key;
         this.value = value;
         this.creationTime = getCurrentTime();

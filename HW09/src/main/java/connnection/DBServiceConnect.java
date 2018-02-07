@@ -1,7 +1,6 @@
 package connnection;
 import base.DataSet;
-import cashEngine.CashElement;
-import cashEngine.CashEngineImpl;
+import cashEngine.CasheEngineImpl;
 import executor.Executor;
 
 import java.lang.reflect.Field;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 public class DBServiceConnect implements DBService {
     private final Connection connection;
-    public DBServiceConnect() {
+    DBServiceConnect() {
         connection = ConnectionHelper.getConnection();
     }
 
@@ -42,38 +41,35 @@ public class DBServiceConnect implements DBService {
     }
 
     @Override
-    public void addNames(String... names)  {
-         Executor updateExec = new Executor(getConnection());
-         int row = 0;
-         for (String name: names) {
-             try {
-                    row = updateExec.execPreparedQuery(INSERT_NAME, result -> {
+    public void addNames(String... names) {
+        Executor updateExec = new Executor(getConnection());
+        int row = 0;
+        try {
+            for (String name : names) {
+                row = updateExec.execPreparedQuery(INSERT_NAME, result -> {
                     result.setString(1, name);
                     return result.executeUpdate();
-                 });
+                });
                 System.out.println(ADD_MASSAGE + row);
-             } catch (SQLException e) {
-                 e.printStackTrace();
-             }
+            }
+        } catch (Exception ex) {
+            System.out.println(String.format("Table doesn't have requested name %d", names));
         }
     }
 
     @Override
     public String getUserName(int id) {
         String name = "";
-
-        try {
             Executor executor = new Executor(getConnection());
-
             name = executor.execPreparedQuery(SHOW, result -> {
                 result.setInt(1, id);
                 ResultSet resultSet = result.executeQuery();
-                resultSet.next();
-                return resultSet.getString("name");
+                if (resultSet.next()) {
+                    return resultSet.getString("name");
+                }
+                else return null;
             });
-        } catch (SQLException ex) {
-            System.out.println(String.format(WARNING, id));
-        }
+
         return name;
     }
 
@@ -108,7 +104,7 @@ public class DBServiceConnect implements DBService {
     }
 
     @Override
-    public <K, V> CashEngineImpl<K,V> getCash() {
+    public <K, V> CasheEngineImpl<K,V> getCashe() {
         return null;
     }
 
@@ -130,9 +126,9 @@ public class DBServiceConnect implements DBService {
     public <T extends DataSet> T loadUser2(long id, Class<T> clazz) {
         try {
             T dataSet = clazz.getConstructor().newInstance();
-            Map<String, Object> mapTable = null;
+            Map<String, Object> mapTable;
             Executor exec = new Executor(getConnection());
-            try {
+//            try {
                 mapTable = exec.execPreparedQuery(SELECT_FROM_USER, result -> {
 
                     int count = result.getMetaData().getColumnCount();
@@ -155,9 +151,9 @@ public class DBServiceConnect implements DBService {
                     }
                     return mappedTable;
                 });
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//            } catch (NoSuchMethodException e) {
+//                e.printStackTrace();
+//            }
             try {
                 for (Field field : dataSet.getClass().getDeclaredFields()) {
                     if (mapTable.containsKey(field.getName())) {
@@ -182,7 +178,7 @@ public class DBServiceConnect implements DBService {
     @Override
     public <T extends DataSet> void saveUser(T user) throws SQLException {
         Map<String, Object> mappedObject = new HashMap<>();
-        long id = 0;
+        long id;
         boolean fieldAccessible = false;
         for (Field field : user.getClass().getDeclaredFields()) {
             if (!field.isAccessible()) {
@@ -225,7 +221,7 @@ public class DBServiceConnect implements DBService {
     }
 
     @Override
-    public <T extends DataSet> void saveUserCash(T user) throws SQLException {
+    public <T extends DataSet> void saveUserCash(T user) {
     }
 
     @Override
@@ -235,7 +231,7 @@ public class DBServiceConnect implements DBService {
 
     }
 
-    protected Connection getConnection() {
+    Connection getConnection() {
         return connection;
     }
 }

@@ -2,43 +2,37 @@ package connnection;
 
 import base.DataSet;
 import base.UserDataSet;
-import cashEngine.CashElement;
-import cashEngine.CashEngineImpl;
+import cashEngine.CasheElement;
+import cashEngine.CasheEngineImpl;
 import executor.Executor;
-import sun.security.provider.MD5;
 
-import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DBServiceCash extends DBServiceConnect {
+public class DBServiceCashe extends DBServiceConnect {
     private Connection connection;
 
-    private int maxElement = 4;
-    private long lifeTimeMs = 100;
-    private long edileTimeMs = 100;
-    private boolean isEternal = true;
+    private final int maxElement = 4;
+    private final long lifeTimeMs = 100;
+    private final long idleTimeMs = 100;
+    private final boolean isEternal = true;
     private static final String INSERT_USERS = "insert into user (name, age) values (?, ?)";
     private static final String WARNING = "Warning table doesn't have requested id (%d)";
     private static final String NAME = "name";
     private static final String AGE = "age";
-    private  CashEngineImpl<Long, DataSet> cash = CashEngineImpl.createEngine(maxElement, lifeTimeMs, edileTimeMs, isEternal);
+    private final CasheEngineImpl<Long, DataSet> cashe = CasheEngineImpl.createEngine(maxElement, lifeTimeMs, idleTimeMs, isEternal);
     private static int ii = 0;
 
     @Override
     public <T extends DataSet> T loadUser2(long id, Class<T> clazz) {
-        CashElement cashElement = cash.get(id);
-        if (cashElement == null) {
+        CasheElement casheElement = cashe.get(id);
+        if (casheElement == null) {
             return super.loadUser2(id, clazz);
         } else {
-            return (T) cashElement.getValue();
+            return (T) casheElement.getValue();
         }
     }
 
@@ -47,7 +41,7 @@ public class DBServiceCash extends DBServiceConnect {
 
         UserDataSet dataSet = new UserDataSet();
 
-        Long id = null;
+        Long id;
         boolean fieldAccessible = false;
         Map<String, Object> mappedObjectCash = new HashMap<>();
 
@@ -101,33 +95,9 @@ public class DBServiceCash extends DBServiceConnect {
             ex.printStackTrace();
         }
 
-        cash.put(new CashElement<>((Long) mappedObjectCash.get("id"), dataSet));
+        cashe.put(new CasheElement<>((Long) mappedObjectCash.get("id"), dataSet));
     }
-    public <K, V> CashEngineImpl<K, V> getCash() {
-        return (CashEngineImpl<K, V>) cash;
+    public <K, V> CasheEngineImpl<K, V> getCashe() {
+        return (CasheEngineImpl<K, V>) cashe;
     }
-
 }
-
-
-
-//System.out.println(cash);
-
-//        long l = System.currentTimeMillis();
-//
-//        String s = "This is a test" + ii;
-//
-//        MessageDigest m = null;
-//        try {
-//            m = MessageDigest.getInstance("MD5");
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-//
-//        m.update(s.getBytes(), 0, s.length());
-//        System.out.println("MD5: " + new BigInteger(1, m.digest()).toString(16));
-//        System.out.println(System.currentTimeMillis()-l);
-//        ii++;
-
-
-
