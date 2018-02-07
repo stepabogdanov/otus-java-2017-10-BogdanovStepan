@@ -55,11 +55,11 @@ public class Executor {
     public <E> E execPreparedQuery(String query, PResultHandlerT<E> prepare) throws SQLException {
         try {
             PreparedStatement pStatement = connection.prepareStatement(query);
-            //ResultSet resultSet = prepare.accept(pStatement);
-            pStatement.close();
+            return prepare.accept(pStatement);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        System.out.println("NULL!!");
         return null;
     }
 

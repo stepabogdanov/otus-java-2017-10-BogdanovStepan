@@ -21,7 +21,7 @@ import java.util.Map;
 public class DBServiceCash extends DBServiceConnect {
     private Connection connection;
 
-    private int maxElement = 2;
+    private int maxElement = 4;
     private long lifeTimeMs = 100;
     private long edileTimeMs = 100;
     private boolean isEternal = true;

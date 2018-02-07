@@ -2,8 +2,8 @@ package base;
 
 public class UserDataSet extends DataSet {
     private String name;
-    private int age;
-    private long id;
+    private Integer age;
+    private Long id;
 
     public UserDataSet() {
         super();
@@ -18,7 +18,7 @@ public class UserDataSet extends DataSet {
         return name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
