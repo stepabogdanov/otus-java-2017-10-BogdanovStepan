@@ -1,4 +1,4 @@
-package cashEngine;
+package cacheEngine;
 
 @SuppressWarnings("WeakerAccess")
 public interface CashEngine<K,V> {
