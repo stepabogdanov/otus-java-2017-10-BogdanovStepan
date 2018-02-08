@@ -23,7 +23,10 @@ public class UserDataSet extends DataSet {
     }
 
     public long getId() {
-        return id;
+        if (id != null) {
+            return id;
+        }
+        else return -1l;
     }
 
     @Override

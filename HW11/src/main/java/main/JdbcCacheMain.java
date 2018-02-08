@@ -4,6 +4,8 @@ import base.UserDataSet;
 import base.DBService;
 import connnection.DBServiceCache;
 
+import java.util.List;
+
 
 // mysql> SET GLOBAL time_zone = '+3:00';
 public class JdbcCacheMain {
@@ -47,18 +49,15 @@ public class JdbcCacheMain {
             System.out.println("hit: " + dbService.getCache().getHitCount());
             System.out.println(dbService.getCache());
 
-
-
             System.out.println(dbService.getUserName(4));
-//            List<String> names = dbService.getAllNames();
+            List<String> names = dbService.getAllNames();
 
-//            System.out.println(names);
+            System.out.println(names);
 
-
-//            System.out.println(dbService.loadUser2(2, UserDataSet.class));
-//            System.out.println(dbService.loadUser2(5, UserDataSet.class));
-//            System.out.println(dbService.loadUser2(3, UserDataSet.class));
-//            System.out.println(dbService.loadUser2(99, UserDataSet.class));
+            System.out.println(dbService.loadUser2(2, UserDataSet.class));
+            System.out.println(dbService.loadUser2(5, UserDataSet.class));
+            System.out.println(dbService.loadUser2(3, UserDataSet.class));
+            System.out.println(dbService.loadUser2(99, UserDataSet.class));
 
         }
 
