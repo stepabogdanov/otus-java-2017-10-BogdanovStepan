@@ -1,12 +1,15 @@
 package jetty;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import servlet.MainServlet;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
 
 
 
@@ -15,10 +18,10 @@ public class Main {
 
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-        servletContextHandler.addServlet(MainServlet.class, "/login");
+        servletContextHandler.addServlet(MainServlet.class,  "/*");
 
         Server server = new Server(8080);
-        server.setHandler(resourceHandler);
+        server.setHandler(new HandlerList(resourceHandler, servletContextHandler));
 
 
         server.start();
