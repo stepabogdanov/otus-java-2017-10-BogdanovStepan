@@ -8,17 +8,17 @@
     <p>User Base.<br/> To access to the cache get authorized</p>
     <!--a href="login">Login</a-->
     <!--form method="post" -->
+    <form method="post">
         <p>username<input type="text" align="center" name="username"><br/></p>
         <p>age<input type="text" name="age" ><br/></p>
-    <form method="post">
-        <input type="submit" value="add">
-        <input type="submit" value="remove">
-    </form>
-    <form method="post">
+        <input type="submit" value="add" name="add">
+        <input type="submit" value="remove" name="remove">
         <input type="submit" value="get cache" name="cache">
     </form>
     <!--/form-->
-    <p>${cache}</p>
+    <p>Cache: ${cache}</p>
+    <p>Parameters:${parameters}</p>
+
 
 </body>
 </html>

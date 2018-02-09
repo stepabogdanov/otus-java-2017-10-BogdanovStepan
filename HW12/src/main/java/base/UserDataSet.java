@@ -29,6 +29,17 @@ public class UserDataSet extends DataSet {
         else return -1l;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(Integer age) {
+        if (age != null) {
+            this.age = age;
+        }
+        else this.age = null;
+    }
+
     @Override
     public String toString(){
         return "UserDataSet: [ id: " +  getId() + " name: " + getName() +  " age: " + getAge() + "]";

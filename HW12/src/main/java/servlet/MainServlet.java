@@ -1,5 +1,9 @@
 package servlet;
 
+import base.DBService;
+import base.DataSet;
+import base.UserDataSet;
+import connnection.DBServiceCache;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -12,19 +16,22 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainServlet extends HttpServlet {
-
+    private UserDataSet userDataSet;
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Map mapParam = request.getParameterMap();
+        if (request.getParameter("add") != null) {
+            saveUser(request);
+        }
 
-        //request.getP
         response.getWriter().println(getPage(request));
-        //response.getWriter().println(mapParam);
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -45,25 +52,38 @@ public class MainServlet extends HttpServlet {
     String getPage(HttpServletRequest request) throws IOException {
 
         try (Writer stream = new StringWriter()) {
+            Map<String, String[]> param = request.getParameterMap();
+            Configuration configuration = new Configuration();
+            Template template = configuration.getTemplate("public_html/index.html");
 
             Map<String, String> map = new HashMap<>();
 
             if (request.getParameter("cache") != null) {
                 map.put("cache", JdbcCacheMain.getCache().toString());
+                map.put("parameters" , "");
             }
             else {
+                map.put("parameters", request.getParameterMap().toString());
                 map.put("cache", "wrong button!");
             }
-
-            Configuration configuration = new Configuration();
-            Template template = configuration.getTemplate("public_html/index.html");
-
-
             template.process(map, stream);
+
             return stream.toString();
         } catch (TemplateException e) {
             throw  new IOException();
         }
-        //return null;
+
     }
+
+    private void saveUser(HttpServletRequest request) {
+        UserDataSet user = new UserDataSet();
+        user.setName(request.getParameter("username"));
+        user.setAge( Integer.parseInt(request.getParameter("age").replaceAll("[\\D]","")));
+        try (DBService dbService = new DBServiceCache()) {
+            dbService.saveUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
