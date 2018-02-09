@@ -2,22 +2,30 @@ package jetty;
 
 import base.DBService;
 import base.UserDataSet;
+import cacheEngine.CacheElement;
+import cacheEngine.CacheEngineImpl;
 import connnection.DBServiceCache;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import servlet.MainServlet;
 
+import java.lang.ref.SoftReference;
 import java.util.List;
 
 
 // mysql> SET GLOBAL time_zone = '+3:00';
-public class JdbcCacheMain {
+public class JdbcCacheMain <K,V> {
+    private static CacheEngineImpl cache;
 
     public static void main(String[] args) throws Exception {
 
-        new JdbcCacheMain().runServer();
         new JdbcCacheMain().run();
+        new JdbcCacheMain().runServer();
 
     }
+
 
     private void run() throws Exception {
 
@@ -51,6 +59,7 @@ public class JdbcCacheMain {
 
             System.out.println("miss: " + dbService.getCache().getMissCount());
             System.out.println("hit: " + dbService.getCache().getHitCount());
+            cache = dbService.getCache();
             System.out.println(dbService.getCache());
 
             System.out.println(dbService.getUserName(4));
@@ -69,14 +78,28 @@ public class JdbcCacheMain {
     }
 
     private void runServer() throws Exception {
+
         ResourceHandler resourceHandler = new ResourceHandler();
+
         resourceHandler.setResourceBase("public_html");
 
+        ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+
+        servletContextHandler.addServlet(MainServlet.class,  "/*");
+
         Server server = new Server(8080);
-        server.setHandler(resourceHandler);
+
+
+        server.setHandler(new HandlerList(resourceHandler, servletContextHandler));
+
 
 
         server.start();
         server.join();
+    }
+
+    public static CacheEngineImpl<Long, SoftReference> getCache() {
+
+        return cache;
     }
 }

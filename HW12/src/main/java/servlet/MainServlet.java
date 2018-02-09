@@ -3,6 +3,7 @@ package servlet;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import jetty.JdbcCacheMain;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,12 +45,20 @@ public class MainServlet extends HttpServlet {
     String getPage(HttpServletRequest request) throws IOException {
 
         try (Writer stream = new StringWriter()) {
-            String cacheValue = request.getParameter("username");
-            System.out.println(cacheValue);
+
+            Map<String, String> map = new HashMap<>();
+
+            if (request.getParameter("cache") != null) {
+                map.put("cache", JdbcCacheMain.getCache().toString());
+            }
+            else {
+                map.put("cache", "wrong button!");
+            }
+
             Configuration configuration = new Configuration();
             Template template = configuration.getTemplate("public_html/index.html");
-            Map<String, String> map = new HashMap<>();
-            map.put("cache", cacheValue);
+
+
             template.process(map, stream);
             return stream.toString();
         } catch (TemplateException e) {
