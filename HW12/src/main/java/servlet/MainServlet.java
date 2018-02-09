@@ -9,6 +9,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import jetty.JdbcCacheMain;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +30,9 @@ public class MainServlet extends HttpServlet {
         Map mapParam = request.getParameterMap();
         if (request.getParameter("add") != null) {
             saveUser(request);
+
         }
+
 
         response.getWriter().println(getPage(request));
 
@@ -63,8 +66,11 @@ public class MainServlet extends HttpServlet {
                 map.put("parameters" , "");
             }
             else {
+//                map.put("parameters", request.getParameterMap().toString());
                 map.put("parameters", request.getParameterMap().toString());
                 map.put("cache", "wrong button!");
+
+                //request.getQueryString();
             }
             template.process(map, stream);
 
@@ -79,6 +85,8 @@ public class MainServlet extends HttpServlet {
         UserDataSet user = new UserDataSet();
         user.setName(request.getParameter("username"));
         user.setAge( Integer.parseInt(request.getParameter("age").replaceAll("[\\D]","")));
+
+
         try (DBService dbService = new DBServiceCache()) {
             dbService.saveUser(user);
         } catch (Exception e) {
