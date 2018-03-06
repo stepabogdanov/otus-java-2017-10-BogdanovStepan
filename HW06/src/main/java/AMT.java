@@ -1,29 +1,15 @@
 public class AMT {
-     private int publicAccount;
-     Cashbox cashbox = new Cashbox();
+    Cashbox cashbox;
 
-
-    public int getInfoAmountMoneyInAMT () {
-
-        System.out.println(publicAccount);
-        return publicAccount;
+    public AMT() {
+        this.cashbox = new Cashbox();
     }
 
-    public void putMoney (Notes notes) {
-
-        publicAccount +=notes.getNominal();
-        cashbox.acceptMoney(notes,1);
-
+    public void putMoney(int amountMoney) {
+        cashbox.putToCashbox(amountMoney);
     }
 
-    public void GetInFoCashbox () {
-
-        cashbox.getInfoMoneyCell()
+    public int showMoney() {
+        return cashbox.show();
     }
-
-
-
-
-
-
 }

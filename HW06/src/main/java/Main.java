@@ -1,14 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        AMT a = new AMT();
-        a.getInfoAmountMoneyInAMT();
-
-
-        a.putMoney(Notes.NOTE500);
-        a.putMoney(Notes.NOTE500);
-        a.putMoney(Notes.NOTE500);
-        a.putMoney(Notes.NOTE500);
-
-        a.getInfoAmountMoneyInAMT();
+        AMT amt = new AMT();
+        amt.putMoney(20);
+        amt.putMoney(40);
+        System.out.println(amt.showMoney());
     }
 }
