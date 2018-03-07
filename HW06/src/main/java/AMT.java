@@ -5,11 +5,12 @@ public class AMT {
         this.cashbox = new Cashbox();
     }
 
-    public void putMoney(int amountMoney) {
-        cashbox.putToCashbox(amountMoney);
+    public void putMoney(Notes notes, int amountOfNotes) {
+        cashbox.putToCashbox(notes, amountOfNotes);
     }
 
     public int showMoney() {
         return cashbox.show();
     }
+
 }

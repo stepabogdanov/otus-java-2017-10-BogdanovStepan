@@ -14,8 +14,8 @@ public class Cashbox {
         this.amountMoney = amountMoney;
     }
 
-    public void putToCashbox ( int amountMoney) {
-        this.amountMoney += amountMoney;
+    public void putToCashbox (Notes notes,  int amountOfNotes) {
+        this.amountMoney += notes.getNominal() * amountOfNotes;
     }
 
     public int show() {
