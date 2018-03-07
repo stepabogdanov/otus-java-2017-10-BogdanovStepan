@@ -1,4 +1,5 @@
 public class Cashbox {
+    Money money;
 
     private int cellCash50;
     private int cellCash100;
@@ -13,16 +14,19 @@ public class Cashbox {
     public Cashbox() {
     }
 
-    public Cashbox(int amountMoney) {
-
-        this.amountMoney = amountMoney;
-    }
 
     public void putToCashbox (Money money) {
+
+        cellCash50 = money.getNotes().getNominal();
         this.amountMoney += money.getAmount();
     }
 
     public int show() {
         return amountMoney;
     }
+
+    private void fillCells  (Money money) {
+//        if
+    }
+
 }

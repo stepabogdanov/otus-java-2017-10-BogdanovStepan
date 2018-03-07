@@ -1,5 +1,6 @@
 public enum Notes {
 
+
     NOTE100(100),
     NOTE200(200),
     NOTE500(500),
@@ -9,8 +10,8 @@ public enum Notes {
 
     private int nominal;
 
-    Notes (int p) {
-        nominal = p;
+    Notes (int nominal) {
+        this.nominal = nominal;
     }
 
     public int getNominal () {

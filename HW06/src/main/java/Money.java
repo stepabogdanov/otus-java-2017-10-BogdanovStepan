@@ -1,17 +1,16 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by step on 07.03.2018.
  */
 public class Money implements Acceptable {
-//
-//    private static final int note50 = 50;
-//    private static final int note100 = 100;
-//    private static final int note200 = 200;
-//    private static final int note500 = 500;
-//    private static final int note1000 = 1000;
-//    private static final int note2000 = 2000;
-//    private static final int note5000 = 5000;
-    Notes notes;
+    List<Notes> listNotes = new ArrayList<>();
     private int amount;
+    private Notes notes;
+    private int sum;
 
     public int getAmount () {
         return amount;
@@ -24,12 +23,19 @@ public class Money implements Acceptable {
 
     @Override
     public Money setAmount(int amount) {
-        this.amount += amount * notes.getNominal();
+        this.amount = amount;
+        for (int i =0; i<amount; i++) {
+            listNotes.add(notes);
+        }
         return  this;
     }
 
     @Override
     public String toString() {
-        return "Money: " + this.getAmount();
+        return "Money: " + sum + listNotes;
+    }
+
+    public Notes getNotes() {
+        return notes;
     }
 }
