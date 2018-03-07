@@ -1,8 +1,12 @@
 public class Cashbox {
 
-    private final static int CASH10 = 10;
-    private final static int CASH50 = 50;
-    private final static int CASH100 = 100;
+    private int cellCash50;
+    private int cellCash100;
+    private int cellCash200;
+    private int cellCash500;
+    private int cellCash1000;
+    private int cellCash2000;
+    private int cellCash5000;
 
     private int amountMoney;
 
@@ -14,8 +18,8 @@ public class Cashbox {
         this.amountMoney = amountMoney;
     }
 
-    public void putToCashbox (Notes notes,  int amountOfNotes) {
-        this.amountMoney += notes.getNominal() * amountOfNotes;
+    public void putToCashbox (Money money) {
+        this.amountMoney += money.getAmount();
     }
 
     public int show() {

@@ -5,8 +5,8 @@ public class AMT {
         this.cashbox = new Cashbox();
     }
 
-    public void putMoney(Notes notes, int amountOfNotes) {
-        cashbox.putToCashbox(notes, amountOfNotes);
+    public void putMoney(Money money) {
+        cashbox.putToCashbox(money);
     }
 
     public int showMoney() {
