@@ -1,35 +1,41 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by step on 07.03.2018.
  */
 public class Money implements Acceptable {
-//
-//    private static final int note50 = 50;
-//    private static final int note100 = 100;
-//    private static final int note200 = 200;
-//    private static final int note500 = 500;
-//    private static final int note1000 = 1000;
-//    private static final int note2000 = 2000;
-//    private static final int note5000 = 5000;
-    Notes notes;
-    private int amount;
 
-    public int getAmount () {
-        return amount;
+    private Notes notes;
+    private Map<Notes, Integer> mapNotes = new HashMap<>();
+
+
+    public Money() {
     }
+
+    public Money(Map<Notes, Integer> mapNotes) {
+        this.mapNotes = mapNotes;
+    }
+
+    public Map<Notes, Integer> getMapNotes () {
+        return mapNotes;
+    }
+
     @Override
     public Money setNotes(Notes notes) {
+        mapNotes.put(notes, 0);
         this.notes = notes;
         return this;
     }
 
     @Override
     public Money setAmount(int amount) {
-        this.amount += amount * notes.getNominal();
+        mapNotes.put(notes, amount);
         return  this;
     }
 
     @Override
     public String toString() {
-        return "Money: " + this.getAmount();
+        return "Money: " + mapNotes;
     }
 }
